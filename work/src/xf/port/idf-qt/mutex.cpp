@@ -5,6 +5,28 @@
 
 #include "mutex.h"
 
-// TODO: Implement code for XFXFMutexPort class
+XFMutexPort::XFMutexPort()
+{
+    _mutex();
+}
 
+XFMutexPort::~XFMutexPort()
+{
+
+}
+
+void XFMutexPort::lock()
+{
+    _mutex.lock();
+}
+
+void XFMutexPort::unlock()
+{
+    _mutex.unlock();
+}
+
+bool XFMutexPort::tryLock(int32_t timeout)
+{
+    _mutex.tryLock(timeout);
+}
 #endif // USE_XF_PORT_IDF_QT_MUTEX_IMPLEMENTATION

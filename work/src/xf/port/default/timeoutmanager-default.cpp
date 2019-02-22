@@ -16,6 +16,13 @@ interface::XFTimeoutManager * interface::XFTimeoutManager::getInstance()
 	return XFTimeoutManagerDefault::getInstance();
 }
 
+interface::XFTimeoutManager *XFTimeoutManagerDefault::getInstance()
+{
+    return interface::XFTimeoutManager::getInstance();
+}
+
 // TODO: Implement code for XFTimeoutManagerDefault class
 
 #endif // USE_XF_TIMEOUTMANAGER_DEFAULT_IMPLEMENTATION
+
+
