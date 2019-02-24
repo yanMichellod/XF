@@ -19,3 +19,11 @@ using interface::XFResourceFactory;
 // TODO: Implement code for XFDispatcherActive class
 
 #endif // USE_XF_DISPATCHER_ACTIVE_DEFAULT_IMPLEMENTATION
+
+XFDispatcherActiveDefault::XFDispatcherActiveDefault()
+{
+    _bInitialized = false;
+    _bExecuting = false;
+    //_events = ;
+    //_pMutex = new interface::XFMutex();
+}
