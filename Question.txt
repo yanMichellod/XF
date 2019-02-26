@@ -1,3 +1,5 @@
 Pourquoi XFEventQueuePort::push(const XFEvent *pEvent) retourne un bool ?
 
 pourquoi enventqueue utilise un QMutex et pas un mutex ?
+
+Pourquoi le xffactory n'a pas d'instance ?

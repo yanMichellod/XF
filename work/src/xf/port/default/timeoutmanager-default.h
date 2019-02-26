@@ -45,6 +45,12 @@ protected:
 	 */
 	void returnTimeout(XFTimeout * pTimeout);	///< Returns timeout back to behavioral class.
 
+    /**
+     * @brief callback function from QObject call after using startTimer()
+     * @param event
+     */
+    virtual void timerEvent(QTimerEvent *event);
+
 protected:
 	typedef std::list<XFTimeout *> TimeoutList;		///< Type used for the _timeouts property.
 	

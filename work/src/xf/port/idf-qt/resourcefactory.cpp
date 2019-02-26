@@ -11,13 +11,20 @@
 ///Static Function
 // TODO: Implement code for XFResourceFactoryPort class
 
+interface::XFResourceFactory *interface::XFResourceFactory::getInstance()
+{
+    return XFResourceFactoryPort::getInstance();
+}
 /**
  * @brief Getter of an instance of interfacec::XFResourceFactory
  */
 interface::XFResourceFactory *XFResourceFactoryPort::getInstance()
 {
-    return XFResourceFactory::getInstance();
-
+    static interface::XFResourceFactory* instance = nullptr;
+    if (instance == nullptr){
+        instance = new interface::XFResourceFactory();
+    }
+    return instance;
 }
 
 interface::XFDispatcher *XFResourceFactoryPort::getDefaultDispatcher()
@@ -36,6 +43,7 @@ interface::XFThread *XFResourceFactoryPort::createThread(interface::XFThreadEntr
 
 interface::XFMutex *XFResourceFactoryPort::createMutex()
 {
-
+    return new XFMutexPort();
 }
 #endif // USE_XF_PORT_IDF_QT_RESOURCE_FACTORY_IMPLEMENTATION
+

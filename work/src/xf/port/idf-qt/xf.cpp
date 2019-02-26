@@ -13,3 +13,8 @@ using interface::XFResourceFactory;
 // TODO: Implement code for XF class
 
 #endif // USE_XF_PORT_IDF_QT_XF_IMPLEMENTATION
+
+void XF::initialize(int timeInterval, int argc, char *argv[])
+{
+
+}

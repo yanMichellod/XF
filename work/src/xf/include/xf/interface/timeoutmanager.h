@@ -2,6 +2,7 @@
 #define XF_INTERFACE_TIMEOUTMANAGER_H
 
 #include <stdint.h>
+#include <QObject>
 
 namespace interface {
     class XFReactive;
@@ -21,8 +22,9 @@ namespace interface {
  * - Implements the Singleton pattern
  * - Handle timeouts (hold, decrement, re-inject)
  */
-class XFTimeoutManager
+class XFTimeoutManager : public QObject
 {
+    Q_OBJECT
 public:
     virtual ~XFTimeoutManager(){}
 
@@ -85,6 +87,13 @@ protected:
 	 * Removes all timeouts corresponding the given parameters.
 	 */
     virtual void removeTimeouts(int32_t timeoutId, interface::XFReactive * pReactive) = 0;
+
+    /**
+     * @brief callback function from QObject call after using startTimer()
+     * @param event
+     */
+    virtual void timerEvent(QTimerEvent *event) = 0;
+
 
 protected:
     int32_t _tickInterval;						///< Interval in milliseconds the TimeoutManager is decrementing the timeouts.
