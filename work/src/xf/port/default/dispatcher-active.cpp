@@ -25,7 +25,7 @@ XFDispatcherActiveDefault::XFDispatcherActiveDefault():_events()
     _bInitialized = false;
     _bExecuting = false;
     _pMutex = interface::XFResourceFactory::getInstance()->createMutex();
-    _pThread = interface::XFResourceFactory::getInstance()->createThread();
+    //_pThread = interface::XFResourceFactory::getInstance()->createThread();
 }
 
 XFDispatcherActiveDefault::~XFDispatcherActiveDefault()

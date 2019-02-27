@@ -22,7 +22,7 @@ interface::XFResourceFactory *XFResourceFactoryPort::getInstance()
 {
     static interface::XFResourceFactory* instance = nullptr;
     if (instance == nullptr){
-        instance = new interface::XFResourceFactory();
+        instance = new XFResourceFactoryPort();
     }
     return instance;
 }

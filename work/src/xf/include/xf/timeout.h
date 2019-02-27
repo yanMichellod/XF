@@ -51,6 +51,11 @@ public:
     inline void substractFromRelTicks(int ticksToSubstract) { _relTicks -= ticksToSubstract; }      ///< Substracts `ticksToSubstract` from remaining ticks.
     inline void addToRelTicks(int ticksToAdd) { _relTicks += ticksToAdd; }                          ///< Adds `ticksToAdd` to remaining ticks.
 
+    /**
+     * Methods added by myself
+     */
+    inline int getInterval(){return _interval;}
+
 protected:
 	int _interval;		///< Timeout interval
     int _relTicks;		///< Used by the TimeoutManager to calculate remaining time. Can get negative!

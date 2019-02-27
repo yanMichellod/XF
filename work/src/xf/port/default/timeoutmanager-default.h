@@ -55,7 +55,6 @@ protected:
 	typedef std::list<XFTimeout *> TimeoutList;		///< Type used for the _timeouts property.
 	
 	TimeoutList _timeouts;							///< Container holding timeouts to manage.
-
 	interface::XFMutex * _pMutex;					///< Mutex to protect access to TimeoutList.
 };
 
