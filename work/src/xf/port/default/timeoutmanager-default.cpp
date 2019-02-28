@@ -57,19 +57,25 @@ void XFTimeoutManagerDefault::unscheduleTimeout(int32_t timeoutId, interface::XF
 
 void XFTimeoutManagerDefault::tick()
 {
-    ///substract relative tick of the first element of the list
-    _timeouts.front()->substractFromRelTicks(1);
-    /// the event is timeout
-    if(_timeouts.front()->getRelTicks() == 0){
-        _timeouts.front()->getBehavior()->pushEvent(_timeouts.front());
-        /**
-        * WORK IN PROGRESS
-        */
+    ///substract relative tick of the first element of the list if the list is not empty
+    if(!_timeouts.empty()){
+        _timeouts.front()->substractFromRelTicks(1);
+        /// the event is timeout
+        if(_timeouts.front()->getRelTicks() == 0){
+            /**
+            * WORK IN PROGRESS
+            * DON'T SURE IT WORKS
+            */
+            returnTimeout(_timeouts.front());
+            addTimeout(_timeouts.front());
+            _timeouts.pop_front();
+         }
     }
 }
 
 void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
 {
+    /// WARNING !!!!! Maybe the mutex must protect all this method
     /// if the timeout is the first in the list
     if(_timeouts.empty() == true){
         pNewTimeout->setRelTicks(pNewTimeout->getInterval());
@@ -80,6 +86,7 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
         int relTickTot = 0;
         bool inserted = false;
         /// browse the list the find the correct position according to the relative tick
+        _pMutex->lock();
         for(XFTimeout* timeout : _timeouts){
             relTickTot = relTickTot + timeout->getRelTicks();
             /// find the correct place to insert the new timeout
@@ -97,6 +104,7 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
                 timeout->setRelTicks(timeout->getRelTicks()-pNewTimeout->getRelTicks());
             }
         }
+        _pMutex->unlock();
         /// the timeout was not inserted. it should be the last
         if(!inserted){
             pNewTimeout->setRelTicks(pNewTimeout->getInterval()-relTickTot);
@@ -108,18 +116,30 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
 void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFReactive *pReactive)
 {
     XFTimeout timeoutToRemove(timeoutId,0,pReactive);
+    int removedRelTick = 0;
+    bool removed = false;
     /// erase timeout according to it Id and it XFReactive
+    _pMutex->lock();
+    /// WARNING DON'T SURE IT WORK
+    /// IN NO WORKING CASE USE ERASE METHOD FROM STD::LIST WITH ITERATOR
     for(XFTimeout*  temp: _timeouts){
         /// find the timeout to remove
         if(*temp == timeoutToRemove){
+            removedRelTick = temp->getRelTicks();
             _timeouts.remove(temp);
+            removed = true;
+        }
+       /// add relTick of the element removed in the list at the other element next to him
+        if(removed){
+            temp->addToRelTicks(removedRelTick);
         }
     }
+    _pMutex->unlock();
 }
 
 void XFTimeoutManagerDefault::returnTimeout(XFTimeout *pTimeout)
 {
-
+    pTimeout->getBehavior()->pushEvent(pTimeout);
 }
 
 void XFTimeoutManagerDefault::timerEvent(QTimerEvent *event)

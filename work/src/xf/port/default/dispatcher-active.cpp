@@ -25,7 +25,10 @@ XFDispatcherActiveDefault::XFDispatcherActiveDefault():_events()
     _bInitialized = false;
     _bExecuting = false;
     _pMutex = interface::XFResourceFactory::getInstance()->createMutex();
-    //_pThread = interface::XFResourceFactory::getInstance()->createThread();
+    _pThread = interface::XFResourceFactory::getInstance()->createThread(this,
+                                                                         &execute,
+                                                                         "Thread behavior",
+                                                                         0);
 }
 
 XFDispatcherActiveDefault::~XFDispatcherActiveDefault()
@@ -51,26 +54,46 @@ void XFDispatcherActiveDefault::stop()
     _bExecuting = false;
 }
 
+/**
+ * @brief push an event inside the queue waiting to be dispatched
+ * @param pEvent Event to be dispatched
+ */
 void XFDispatcherActiveDefault::pushEvent(XFEvent *pEvent)
 {
     _events.push(pEvent);
 }
 
+/**
+ * @brief schedule a timeout with an instance of the timeout manager
+ * @param timeoutId
+ * @param interval
+ * @param pReactive
+ */
 void XFDispatcherActiveDefault::scheduleTimeout(int timeoutId, int interval, interface::XFReactive *pReactive)
 {
-
+    XFTimeoutManager::getInstance()->scheduleTimeout(timeoutId,interval,pReactive);
 }
 
+/**
+ * @brief unschedule timer with an instance of the timeout manager
+ * @param timeoutId
+ * @param pReactive
+ */
 void XFDispatcherActiveDefault::unscheduleTimeout(int timeoutId, interface::XFReactive *pReactive)
 {
-
+    XFTimeoutManager::getInstance()->unscheduleTimeout(timeoutId,pReactive);
 }
 
 int XFDispatcherActiveDefault::executeOnce()
 {
-    /// can not be called if start() has been executed
+    /// can not be called if start() has not been executed
     if(_bExecuting == true){
         return -1;
+    }
+    else{
+        if(!_events.empty()){
+            //execute(_events.pop());
+        }
     }
 }
 

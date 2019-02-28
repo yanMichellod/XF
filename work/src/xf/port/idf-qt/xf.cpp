@@ -16,5 +16,21 @@ using interface::XFResourceFactory;
 
 void XF::initialize(int timeInterval, int argc, char *argv[])
 {
+    interface::XFTimeoutManager.getInstance()->initialize(timeInterval);
+    interface::XFTimeoutManager.getInstance()->start();
+}
 
+int XF::exec()
+{
+
+}
+
+int XF::execOnce()
+{
+
+}
+
+interface::XFDispatcher *XF::getDefaultDispatcher()
+{
+    return XFResourceFactory::getDefaultDispatcher();
 }

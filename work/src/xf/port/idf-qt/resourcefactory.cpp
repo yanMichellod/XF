@@ -20,25 +20,30 @@ interface::XFResourceFactory *interface::XFResourceFactory::getInstance()
  */
 interface::XFResourceFactory *XFResourceFactoryPort::getInstance()
 {
-    static interface::XFResourceFactory* instance = nullptr;
-    if (instance == nullptr){
-        instance = new XFResourceFactoryPort();
+    static interface::XFResourceFactory* FactoryInstance = nullptr;
+    if (FactoryInstance == nullptr){
+        FactoryInstance = new XFResourceFactoryPort();
     }
-    return instance;
+    return FactoryInstance;
 }
 
 interface::XFDispatcher *XFResourceFactoryPort::getDefaultDispatcher()
 {
+    static interface::XFDispatcher* dispatcherInstance = nullptr;
+    if(dispatcherInstance == nullptr){
+        dispatcherInstance = createDispatcher();
+    }
+    return dispatcherInstance;
 }
 
 interface::XFDispatcher *XFResourceFactoryPort::createDispatcher()
 {
-
+    return new XFDispatcherActiveDefault();
 }
 
 interface::XFThread *XFResourceFactoryPort::createThread(interface::XFThreadEntryPointProvider *pProvider, interface::XFThread::EntryMethodBody entryMethod, const char *threadName, const uint32_t stackSize)
 {
-
+    return XFThreadPort(pProvider, entryMethod, threadName, stackSize);
 }
 
 interface::XFMutex *XFResourceFactoryPort::createMutex()
