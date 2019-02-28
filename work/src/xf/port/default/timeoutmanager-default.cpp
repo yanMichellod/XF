@@ -4,6 +4,7 @@
 #if (USE_XF_TIMEOUTMANAGER_DEFAULT_IMPLEMENTATION != 0)
 
 #include <assert.h>
+#include <trace/trace.h>
 #include "xf/interface/reactive.h"
 #include "xf/interface/resourcefactory.h"
 #include "port-functions.h"
@@ -38,7 +39,7 @@ interface::XFTimeoutManager *XFTimeoutManagerDefault::getInstance()
 
 void XFTimeoutManagerDefault::start()
 {
-
+    Trace::out("Start XFTimeoutManager...\n---------------------");
 }
 
 void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interval, interface::XFReactive *pReactive)

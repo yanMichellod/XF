@@ -28,7 +28,6 @@ void TestFactory01::initialize()
 void TestFactory01::build()
 {
     Trace::out("Starting test1...\n---------------------");
-
     // Start state machine
     _task01.startBehavior();
     _task02.startBehavior();

@@ -3,6 +3,7 @@
 #if (USE_XF_PORT_IDF_QT_THREAD_IMPLEMENTATION != 0)
 
 #include <assert.h>
+#include "trace/trace.h"
 #include <string.h>
 #include "thread.h"
 
@@ -27,11 +28,13 @@ XFThreadPort::XFThreadPort(interface::XFThreadEntryPointProvider *pProvider, int
 
 void XFThreadPort::run()
 {
-    run();
+    //_pEntryMethodProvider;
 }
 void XFThreadPort::start()
 {
-    start();
+    Trace::out("XFThreadPort::start() \n---------------------");
+    QThread::start();
+    Trace::out("thread started...\n---------------------");
 }
 
 void XFThreadPort::suspend()

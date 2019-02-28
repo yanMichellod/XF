@@ -10,7 +10,6 @@
 
 // TODO: Implement code for XFEventQueuePort class
 
-#endif // USE_XF_PORT_IDF_QT_EVENT_QUEUE_IMPLEMENTATION
 
 /**
  * @brief Constructor of XFEventQueue that create a QMutex, a QWaitCondition and EventQueue.
@@ -87,3 +86,4 @@ bool XFEventQueuePort::pend()
     }
     return true;
 }
+#endif // USE_XF_PORT_IDF_QT_EVENT_QUEUE_IMPLEMENTATION

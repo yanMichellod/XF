@@ -23,10 +23,12 @@ XFDispatcherActiveDefault::XFDispatcherActiveDefault() :
     _pThread(nullptr),
     _pMutex(nullptr)
 {
+    Trace::out("XFDispatcherActiveDefault() Constructor\n---------------------");
     // Create Thread
     _pThread = XFResourceFactory::getInstance()->createThread(this,
                                                               (interface::XFThread::EntryMethodBody)&XFDispatcherActiveDefault::execute,
                                                               "dispatcherThread");
+    assert(_pThread);
     if (!_bInitialized)
     {
         _bInitialized = true;
@@ -43,16 +45,20 @@ XFDispatcherActiveDefault::~XFDispatcherActiveDefault()
 
 void XFDispatcherActiveDefault::initialize()
 {
-    _bInitialized;
 }
 
 void XFDispatcherActiveDefault::start()
 {
+    Trace::out("XFDispatcher...\n---------------------");
     assert(_pThread);
     assert(_pMutex);        // Call initialize() first
     _bExecuting = true;
+    Trace::out("Start thread...\n---------------------");
     _pThread->start();
+    Trace::out("Start timer...\n---------------------");
     startTimer(interface::XFTimeoutManager::getInstance()->getTickInterval());
+    Trace::out("timer started...\n---------------------");
+
 }
 
 void XFDispatcherActiveDefault::stop()
@@ -123,6 +129,7 @@ void XFDispatcherActiveDefault::dispatchEvent(const XFEvent * pEvent) const
 
 void XFDispatcherActiveDefault::timerEvent(QTimerEvent *event)
 {
+    Trace::out("tick...\n---------------------");
     interface::XFTimeoutManager::getInstance()->tick();
 }
 
