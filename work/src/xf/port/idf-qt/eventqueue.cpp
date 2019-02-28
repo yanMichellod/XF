@@ -3,6 +3,7 @@
 #if (USE_XF_PORT_IDF_QT_EVENT_QUEUE_IMPLEMENTATION != 0)
 
 #include <assert.h>
+#include "trace/trace.h"
 #include <QtGlobal>
 #include <QMutexLocker>
 #include "eventqueue.h"
@@ -16,8 +17,8 @@
  * The EventQueue is a QQueue of EXEvent*.
  */
 XFEventQueuePort::XFEventQueuePort():_mutex(),_newEvents(),_queue()
-
 {
+
 }
 
 /**
@@ -50,6 +51,7 @@ bool XFEventQueuePort::push(const XFEvent *pEvent)
     if(wasEmpty == true){
         _newEvents.wakeAll();
     }
+    Trace::out("event was enqueue ...\n---------------------");
     return true;
 }
 
@@ -77,6 +79,7 @@ void XFEventQueuePort::pop()
 bool XFEventQueuePort::pend()
 {
     bool isEmpty = empty();
+    Trace::out("block while the queue is empty ...\n---------------------");
     if(isEmpty == true){
         _mutex.lock();
         _newEvents.wait(&_mutex);

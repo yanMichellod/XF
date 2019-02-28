@@ -38,7 +38,7 @@ interface::XFTimeoutManager *XFTimeoutManagerDefault::getInstance()
 
 void XFTimeoutManagerDefault::start()
 {
-    startTimer(getTickInterval());
+
 }
 
 void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interval, interface::XFReactive *pReactive)
@@ -66,8 +66,10 @@ void XFTimeoutManagerDefault::tick()
             * WORK IN PROGRESS
             * DON'T SURE IT WORKS
             */
-            returnTimeout(_timeouts.front());
-            addTimeout(_timeouts.front());
+            if(_timeouts.front()->deleteAfterConsume() == false){
+                returnTimeout(_timeouts.front());
+                addTimeout(_timeouts.front());
+            }
             _timeouts.pop_front();
          }
     }
@@ -142,10 +144,6 @@ void XFTimeoutManagerDefault::returnTimeout(XFTimeout *pTimeout)
     pTimeout->getBehavior()->pushEvent(pTimeout);
 }
 
-void XFTimeoutManagerDefault::timerEvent(QTimerEvent *event)
-{
-    tick();
-}
 
 // TODO: Implement code for XFTimeoutManagerDefault class
 

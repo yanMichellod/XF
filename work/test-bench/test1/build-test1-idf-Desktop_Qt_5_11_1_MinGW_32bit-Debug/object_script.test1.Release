@@ -19,4 +19,5 @@ INPUT(
 ./release\main.o
 ./release\testfactory01.o
 ./release\statemachine01.o
+./release\moc_dispatcher.o
 );

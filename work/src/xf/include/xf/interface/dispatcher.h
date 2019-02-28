@@ -2,6 +2,8 @@
 #define XF_INTERFACE_DISPATCHER_H
 
 #include "xf/event.h"
+#include <QObject>
+
 
 class XF;
 
@@ -26,8 +28,9 @@ class XFThread;
  *
  * In an IDF the attribute _pThread is usually null.
  */
-class XFDispatcher
+class XFDispatcher : public QObject
 {
+    Q_OBJECT
 	friend class ::XF;
 
 public:
@@ -92,6 +95,12 @@ protected:
      * \param pEvent The event to dispatch
      */
     virtual void dispatchEvent(const XFEvent * pEvent) const = 0;
+
+    /**
+     * @brief callback function from QObject call after using startTimer()
+     * @param event
+     */
+    virtual void timerEvent(QTimerEvent *event) = 0;
 };
 
 } // namespace interface

@@ -7,6 +7,7 @@
     #include "trace/trace.h"
 #endif // XF_TRACE_EVENT_PUSH_POP
 #include "xf/eventstatus.h"
+#include "trace/trace.h"
 #include "xf/interface/timeoutmanager.h"
 #include "xf/interface/reactive.h"
 #include "xf/interface/thread.h"
@@ -16,95 +17,113 @@
 using interface::XFTimeoutManager;
 using interface::XFResourceFactory;
 
-// TODO: Implement code for XFDispatcherActive class
-
-
-
-XFDispatcherActiveDefault::XFDispatcherActiveDefault():_events()
+XFDispatcherActiveDefault::XFDispatcherActiveDefault() :
+    _bInitialized(false),
+    _bExecuting(false),
+    _pThread(nullptr),
+    _pMutex(nullptr)
 {
-    _bInitialized = false;
-    _bExecuting = false;
-    _pMutex = interface::XFResourceFactory::getInstance()->createMutex();
-    _pThread = interface::XFResourceFactory::getInstance()->createThread(this,
-                                                                         &execute,
-                                                                         "Thread behavior",
-                                                                         0);
+    // Create Thread
+    _pThread = XFResourceFactory::getInstance()->createThread(this,
+                                                              (interface::XFThread::EntryMethodBody)&XFDispatcherActiveDefault::execute,
+                                                              "dispatcherThread");
+    if (!_bInitialized)
+    {
+        _bInitialized = true;
+        _pMutex = XFResourceFactory::getInstance()->createMutex();
+        assert(_pMutex);
+    }
 }
 
 XFDispatcherActiveDefault::~XFDispatcherActiveDefault()
 {
-    delete _pMutex;
-    delete _pThread;
+    _bExecuting = false;
+    _pThread->stop();
 }
 
 void XFDispatcherActiveDefault::initialize()
 {
-    _bInitialized = true;
+    _bInitialized;
 }
 
 void XFDispatcherActiveDefault::start()
 {
-    _pThread->start();
+    assert(_pThread);
+    assert(_pMutex);        // Call initialize() first
     _bExecuting = true;
+    _pThread->start();
+    startTimer(interface::XFTimeoutManager::getInstance()->getTickInterval());
 }
 
 void XFDispatcherActiveDefault::stop()
 {
-    _pThread->stop();
     _bExecuting = false;
+    _pThread->suspend();
 }
 
-/**
- * @brief push an event inside the queue waiting to be dispatched
- * @param pEvent Event to be dispatched
- */
-void XFDispatcherActiveDefault::pushEvent(XFEvent *pEvent)
+void XFDispatcherActiveDefault::pushEvent(XFEvent * pEvent)
 {
-    _events.push(pEvent);
+    if (!_bInitialized)
+    {
+        initialize();
+    }
+
+    _pMutex->lock();
+    {
+//#if (XF_TRACE_EVENT_PUSH_POP != 0)
+        Trace::out("Push event: 0x%x", pEvent);
+//#endif // XF_TRACE_EVENT_PUSH_POP
+        _events.push(pEvent);
+    }
+    _pMutex->unlock();
 }
 
-/**
- * @brief schedule a timeout with an instance of the timeout manager
- * @param timeoutId
- * @param interval
- * @param pReactive
- */
-void XFDispatcherActiveDefault::scheduleTimeout(int timeoutId, int interval, interface::XFReactive *pReactive)
+void XFDispatcherActiveDefault::scheduleTimeout(int timeoutId, int interval, interface::XFReactive * pReactive)
 {
-    XFTimeoutManager::getInstance()->scheduleTimeout(timeoutId,interval,pReactive);
+    // Forward timeout to the timeout manager
+    XFTimeoutManager::getInstance()->scheduleTimeout(timeoutId, interval, pReactive);
 }
 
-/**
- * @brief unschedule timer with an instance of the timeout manager
- * @param timeoutId
- * @param pReactive
- */
-void XFDispatcherActiveDefault::unscheduleTimeout(int timeoutId, interface::XFReactive *pReactive)
+void XFDispatcherActiveDefault::unscheduleTimeout(int timeoutId, interface::XFReactive * pReactive)
 {
-    XFTimeoutManager::getInstance()->unscheduleTimeout(timeoutId,pReactive);
+    // Forward timeout to the timeout manager
+    XFTimeoutManager::getInstance()->unscheduleTimeout(timeoutId, pReactive);
+}
+
+int XFDispatcherActiveDefault::execute(const void * param /* = nullptr */)
+{
+    (void)param;
+
+    while(_bExecuting)
+    {
+        while (_events.empty() && _bExecuting)
+        {
+            _events.pend();	// Wait until something to do
+        }
+
+        executeOnce();
+    }
+
+    return 0;
 }
 
 int XFDispatcherActiveDefault::executeOnce()
 {
-    /// can not be called if start() has not been executed
-    if(_bExecuting == true){
-        return -1;
-    }
-    else{
-        if(!_events.empty()){
-            //execute(_events.pop());
-        }
-    }
+    // TODO: Implement code
+    dispatchEvent(_events.front());
+
+    return _bExecuting;
 }
 
-int XFDispatcherActiveDefault::execute(const void *param)
+void XFDispatcherActiveDefault::dispatchEvent(const XFEvent * pEvent) const
 {
-
+    // TODO: Implement code
+    pEvent->getBehavior()->process(pEvent);
 }
 
-void XFDispatcherActiveDefault::dispatchEvent(const XFEvent *pEvent) const
+void XFDispatcherActiveDefault::timerEvent(QTimerEvent *event)
 {
-
+    interface::XFTimeoutManager::getInstance()->tick();
 }
 
 #endif // USE_XF_DISPATCHER_ACTIVE_DEFAULT_IMPLEMENTATION

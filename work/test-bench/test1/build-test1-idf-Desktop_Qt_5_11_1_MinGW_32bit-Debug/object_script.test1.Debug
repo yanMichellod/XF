@@ -19,4 +19,5 @@ INPUT(
 ./debug\main.o
 ./debug\testfactory01.o
 ./debug\statemachine01.o
+./debug\moc_dispatcher.o
 );

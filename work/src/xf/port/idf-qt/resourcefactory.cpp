@@ -4,6 +4,7 @@
 
 #include <QtGlobal>
 #include "thread.h"
+#include "trace/trace.h"
 #include "default/dispatcher-active.h"
 #include "mutex.h"
 #include "resourcefactory.h"
@@ -31,6 +32,7 @@ interface::XFDispatcher *XFResourceFactoryPort::getDefaultDispatcher()
 {
     static interface::XFDispatcher* dispatcherInstance = nullptr;
     if(dispatcherInstance == nullptr){
+        Trace::out("Create dispatcher...\n---------------------");
         dispatcherInstance = createDispatcher();
     }
     return dispatcherInstance;
@@ -43,7 +45,7 @@ interface::XFDispatcher *XFResourceFactoryPort::createDispatcher()
 
 interface::XFThread *XFResourceFactoryPort::createThread(interface::XFThreadEntryPointProvider *pProvider, interface::XFThread::EntryMethodBody entryMethod, const char *threadName, const uint32_t stackSize)
 {
-    return XFThreadPort(pProvider, entryMethod, threadName, stackSize);
+    return (interface::XFThread*) new XFThreadPort(pProvider, entryMethod, threadName, stackSize);
 }
 
 interface::XFMutex *XFResourceFactoryPort::createMutex()

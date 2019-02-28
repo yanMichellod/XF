@@ -59,7 +59,7 @@ protected:
     virtual XFEventStatus processEvent() = 0;
 
     const XFEvent * getCurrentEvent() const;					///< Returns the current event to be processed in processEvent().
-    interface::XFDispatcher * getDispatcher();					///< Returns reference to #_pDispatcher.
+    interface::XFDispatcher *getDispatcher();					///< Returns reference to #_pDispatcher.
     inline bool isActive() const { return _isActive; }			///< True if behavior has its own active dispatcher.
 
 

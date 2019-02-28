@@ -36,7 +36,7 @@ void XFThreadPort::start()
 
 void XFThreadPort::suspend()
 {
-
+    wait();
 }
 
 void XFThreadPort::stop()
@@ -46,7 +46,7 @@ void XFThreadPort::stop()
 
 void XFThreadPort::setPriority(XFThreadPriority priority)
 {
-    setPriority(priority);
+    //setPriority(priority);
 }
 
 XFThreadPriority XFThreadPort::getPriority() const
