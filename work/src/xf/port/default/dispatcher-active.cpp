@@ -56,7 +56,6 @@ void XFDispatcherActiveDefault::start()
     Trace::out("Start thread...\n---------------------");
     _pThread->start();
     Trace::out("Start timer...\n---------------------");
-    startTimer(interface::XFTimeoutManager::getInstance()->getTickInterval());
     Trace::out("timer started...\n---------------------");
 
 }
@@ -99,7 +98,8 @@ void XFDispatcherActiveDefault::unscheduleTimeout(int timeoutId, interface::XFRe
 int XFDispatcherActiveDefault::execute(const void * param /* = nullptr */)
 {
     (void)param;
-
+//    startTimer(interface::XFTimeoutManager::getInstance()->getTickInterval());
+    Trace::out("Execute dispatcher\n---------------------");
     while(_bExecuting)
     {
         while (_events.empty() && _bExecuting)
@@ -127,10 +127,5 @@ void XFDispatcherActiveDefault::dispatchEvent(const XFEvent * pEvent) const
     pEvent->getBehavior()->process(pEvent);
 }
 
-void XFDispatcherActiveDefault::timerEvent(QTimerEvent *event)
-{
-    Trace::out("tick...\n---------------------");
-    interface::XFTimeoutManager::getInstance()->tick();
-}
 
 #endif // USE_XF_DISPATCHER_ACTIVE_DEFAULT_IMPLEMENTATION

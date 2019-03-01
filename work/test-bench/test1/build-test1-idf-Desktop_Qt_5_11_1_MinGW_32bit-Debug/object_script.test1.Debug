@@ -4,7 +4,6 @@ INPUT(
 ./debug\nulltransition.o
 ./debug\behavior.o
 ./debug\timeout.o
-./debug\xf-default.o
 ./debug\timeoutmanager-default.o
 ./debug\dispatcher-active.o
 ./debug\xf.o
@@ -19,5 +18,4 @@ INPUT(
 ./debug\main.o
 ./debug\testfactory01.o
 ./debug\statemachine01.o
-./debug\moc_dispatcher.o
 );

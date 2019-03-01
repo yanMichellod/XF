@@ -4,7 +4,6 @@ INPUT(
 ./release\nulltransition.o
 ./release\behavior.o
 ./release\timeout.o
-./release\xf-default.o
 ./release\timeoutmanager-default.o
 ./release\dispatcher-active.o
 ./release\xf.o
@@ -19,5 +18,4 @@ INPUT(
 ./release\main.o
 ./release\testfactory01.o
 ./release\statemachine01.o
-./release\moc_dispatcher.o
 );

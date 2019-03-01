@@ -90,7 +90,7 @@
 /** @ingroup xf_core
  *  @{
  */
-
+class QCoreApplication;
 /**
  * @brief Static class grouping the basic methods for the XF together.
  */
@@ -126,6 +126,7 @@ public:
 
 protected:
     static bool _bInitialized;			///< Changes from false to true after calling method initialize(int). Used to handle multiple calls to init(int).
+    static QCoreApplication* _app;               ///< application to execute an infinite loop. Obligatory the accept QT signal and slot
 };
 
 #endif  // __cplusplus
