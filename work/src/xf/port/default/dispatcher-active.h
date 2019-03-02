@@ -47,11 +47,6 @@ protected:
     virtual int execute(const void * param = nullptr);
     virtual void dispatchEvent(const XFEvent * pEvent) const;
 
-    /**
-     * @brief callback function from QObject call after using startTimer()
-     * @param event
-     */
-    virtual void timerEvent(QTimerEvent *event);
 
 protected:
     bool _bInitialized;                 ///< True after call of the #initialize() method.

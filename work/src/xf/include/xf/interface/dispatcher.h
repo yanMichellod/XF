@@ -28,9 +28,8 @@ class XFThread;
  *
  * In an IDF the attribute _pThread is usually null.
  */
-class XFDispatcher : public QObject
+class XFDispatcher
 {
-    Q_OBJECT
 	friend class ::XF;
 
 public:
@@ -96,11 +95,6 @@ protected:
      */
     virtual void dispatchEvent(const XFEvent * pEvent) const = 0;
 
-    /**
-     * @brief callback function from QObject call after using startTimer()
-     * @param event
-     */
-    virtual void timerEvent(QTimerEvent *event) = 0;
 };
 
 } // namespace interface

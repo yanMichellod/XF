@@ -5,7 +5,6 @@ INCLUDEPATH += $$PWD/..
 DEFAULT_IMPL_PATH = $$PWD/../default
 
 DEFAULT_IMPL_SOURCES += \
-    $${DEFAULT_IMPL_PATH}/xf-default.cpp \
     $${DEFAULT_IMPL_PATH}/timeoutmanager-default.cpp \
     $${DEFAULT_IMPL_PATH}/dispatcher-active.cpp
 
@@ -27,4 +26,5 @@ HEADERS += \
     $$PWD/resourcefactory.h \
     $$PWD/mutex.h\
     $$PWD/thread.h\
-    $$PWD/eventqueue.h
+    $$PWD/eventqueue.h \
+    $$PWD/../port-functions.h
