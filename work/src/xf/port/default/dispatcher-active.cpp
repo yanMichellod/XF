@@ -23,7 +23,6 @@ XFDispatcherActiveDefault::XFDispatcherActiveDefault() :
     _pThread(nullptr),
     _pMutex(nullptr)
 {
-    Trace::out("XFDispatcherActiveDefault() Constructor\n---------------------");
     // Create Thread
     _pThread = XFResourceFactory::getInstance()->createThread(this,
                                                               (interface::XFThread::EntryMethodBody)&XFDispatcherActiveDefault::execute,
@@ -49,14 +48,11 @@ void XFDispatcherActiveDefault::initialize()
 
 void XFDispatcherActiveDefault::start()
 {
-    Trace::out("XFDispatcher...\n---------------------");
     assert(_pThread);
     assert(_pMutex);        // Call initialize() first
     _bExecuting = true;
-    Trace::out("Start thread...\n---------------------");
     _pThread->start();
-    Trace::out("Start timer...\n---------------------");
-    Trace::out("timer started...\n---------------------");
+
 
 }
 
@@ -76,7 +72,7 @@ void XFDispatcherActiveDefault::pushEvent(XFEvent * pEvent)
     _pMutex->lock();
     {
 //#if (XF_TRACE_EVENT_PUSH_POP != 0)
-        Trace::out("Push event: 0x%x", pEvent);
+        Trace::out("Push event: 0x%x  \n---------------------", pEvent);
 //#endif // XF_TRACE_EVENT_PUSH_POP
         _events.push(pEvent);
     }
@@ -98,8 +94,6 @@ void XFDispatcherActiveDefault::unscheduleTimeout(int timeoutId, interface::XFRe
 int XFDispatcherActiveDefault::execute(const void * param /* = nullptr */)
 {
     (void)param;
-//    startTimer(interface::XFTimeoutManager::getInstance()->getTickInterval());
-    Trace::out("Execute dispatcher\n---------------------");
     while(_bExecuting)
     {
         while (_events.empty() && _bExecuting)
@@ -117,14 +111,16 @@ int XFDispatcherActiveDefault::executeOnce()
 {
     // TODO: Implement code
     dispatchEvent(_events.front());
-
     return _bExecuting;
 }
 
 void XFDispatcherActiveDefault::dispatchEvent(const XFEvent * pEvent) const
 {
     // TODO: Implement code
-    pEvent->getBehavior()->process(pEvent);
+    XFEventStatus status = pEvent->getBehavior()->process(pEvent);
+    if(status == XFEventStatus::Consumed){
+        Trace::out("Event consumed  \n---------------------");
+    }
 }
 
 

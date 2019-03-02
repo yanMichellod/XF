@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QTimerEvent>
 #include "port-functions.h"
+#include "trace/trace.h"
 
 class TimeoutManagerTimer : public QObject
 {

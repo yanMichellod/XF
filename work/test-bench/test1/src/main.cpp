@@ -1,5 +1,6 @@
 #include "xf/xf.h"
 #include "app/testfactory01.h"
+#include "trace/trace.h"
 
 int main(int argc, char *argv[])
 {

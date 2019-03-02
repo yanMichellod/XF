@@ -39,7 +39,6 @@ XFThreadPort::XFThreadPort(interface::XFThreadEntryPointProvider *pProvider, int
  */
 void XFThreadPort::run()
 {
-    Trace::out("XFThreadPort::run() \n---------------------");
     /// call the method passed during the construction of thread
     /// this way must be strange, but no way to make otherwise
      (_pEntryMethodProvider->*_entryMethod)(this);
@@ -50,9 +49,7 @@ void XFThreadPort::run()
  */
 void XFThreadPort::start()
 {
-    Trace::out("XFThreadPort::start() \n---------------------");
     QThread::start();
-    Trace::out("thread started...\n---------------------");
 }
 
 /**

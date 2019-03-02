@@ -39,7 +39,6 @@ interface::XFTimeoutManager *XFTimeoutManagerDefault::getInstance()
 
 void XFTimeoutManagerDefault::start()
 {
-    Trace::out("Start XFTimeoutManager...\n---------------------");
     XF_startTimeoutManagerTimer(getTickInterval());
 }
 
@@ -61,15 +60,15 @@ void XFTimeoutManagerDefault::tick()
 {
     ///substract relative tick of the first element of the list if the list is not empty
     if(!_timeouts.empty()){
-        _timeouts.front()->substractFromRelTicks(1);
+        _timeouts.front()->substractFromRelTicks(getTickInterval());
         /// the event is timeout
         if(_timeouts.front()->getRelTicks() == 0){
             /**
             * WORK IN PROGRESS
             * DON'T SURE IT WORKS
             */
-            if(_timeouts.front()->deleteAfterConsume() == false){
-                returnTimeout(_timeouts.front());
+            returnTimeout(_timeouts.front());
+            if(_timeouts.front()->deleteAfterConsume() == true){
                 addTimeout(_timeouts.front());
             }
             _timeouts.pop_front();
@@ -96,7 +95,7 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
             /// find the correct place to insert the new timeout
             if(relTickTot > pNewTimeout->getInterval()){
                 /// set relative tick of new timeout
-                pNewTimeout->setRelTicks(relTickTot-timeout->getRelTicks());
+                pNewTimeout->setRelTicks(relTickTot-pNewTimeout->getInterval());
                 /// insert new timeout before the actual pointer of timeout
                 auto it = std::find(_timeouts.begin(), _timeouts.end(), timeout);
                 if (it != _timeouts.end()) {

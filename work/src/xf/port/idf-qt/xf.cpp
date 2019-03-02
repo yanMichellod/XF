@@ -20,9 +20,9 @@ QCoreApplication* XF::_app = nullptr;
 void XF::initialize(int timeInterval, int argc, char *argv[])
 {
     XF::_app = new QCoreApplication(argc, argv);
+    getDefaultDispatcher()->start();
     interface::XFTimeoutManager::getInstance()->initialize(timeInterval);
     interface::XFTimeoutManager::getInstance()->start();
-    getDefaultDispatcher()->start();
 }
 
 /**

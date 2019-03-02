@@ -50,7 +50,6 @@ bool XFEventQueuePort::push(const XFEvent *pEvent)
     if(wasEmpty == true){
         _newEvents.wakeAll();
     }
-    Trace::out("event was enqueue ...\n---------------------");
     return true;
 }
 
@@ -60,7 +59,7 @@ bool XFEventQueuePort::push(const XFEvent *pEvent)
  */
 const XFEvent *XFEventQueuePort::front()
 {
-    return _queue.head();
+    return _queue.dequeue();
 }
 
 /**
@@ -68,7 +67,7 @@ const XFEvent *XFEventQueuePort::front()
  */
 void XFEventQueuePort::pop()
 {
-    _queue.dequeue();
+    _queue.pop_front();
 }
 
 /**
@@ -78,7 +77,6 @@ void XFEventQueuePort::pop()
 bool XFEventQueuePort::pend()
 {
     bool isEmpty = empty();
-    Trace::out("block while the queue is empty ...\n---------------------");
     if(isEmpty == true){
         _mutex.lock();
         _newEvents.wait(&_mutex);

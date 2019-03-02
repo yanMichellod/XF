@@ -6,7 +6,6 @@
 #include "xf/timeout.h"
 #include "xf/initialevent.h"
 #include "xf/behavior.h"
-#include <typeinfo>
 
 using interface::XFResourceFactory;
 
@@ -47,8 +46,7 @@ XFBehavior::~XFBehavior()
  */
 void XFBehavior::startBehavior()
 {
-    Trace::out("Push initial Event ...\n---------------------");
-    pushEvent(new XFInitialEvent());
+    pushEvent(new XFEvent(XFEvent::Initial, 1,this));
 }
 
 /**
@@ -58,7 +56,6 @@ void XFBehavior::startBehavior()
 void XFBehavior::pushEvent(XFEvent *pEvent)
 {
     if(_pDispatcher == nullptr){
-        Trace::out("call Default dispatcher ...\n---------------------");
         interface::XFResourceFactory::getInstance()->getDefaultDispatcher()->pushEvent(pEvent);
     }
     else{

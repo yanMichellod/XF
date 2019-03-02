@@ -30,7 +30,7 @@ XFEventStatus StateMachine01::processEvent()
 		{
 			if (getCurrentEvent()->getEventType() == XFEvent::Initial)
 			{
-				GEN(XFNullTransition());
+                GEN(XFNullTransition(this));
 
 				_currentState = STATE_SAY_HELLO;
 
@@ -48,7 +48,7 @@ XFEventStatus StateMachine01::processEvent()
 					Trace::out(getText());
 				}
 
-				scheduleTimeout(Timeout_SAY_HELLO_id, getRepeatInterval());
+                scheduleTimeout(Timeout_SAY_HELLO_id, getRepeatInterval());
 
 				_currentState = STATE_SAY_HELLO;
 
