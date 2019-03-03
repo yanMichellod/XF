@@ -45,7 +45,7 @@ XFEventStatus StateMachine04a::processEvent()
 		{
 			if (getCurrentEvent()->getEventType() == XFEvent::Initial)
 			{
-                GEN(XFNullTransition(this));
+                GEN(XFNullTransition());
 
 				_currentState = STATE_WAIT;
 				eventStatus = XFEventStatus::Consumed;

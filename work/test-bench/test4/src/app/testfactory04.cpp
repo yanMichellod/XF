@@ -34,5 +34,5 @@ void TestFactory04::build()
 
 	// Start state machine(s)
 	_task01.startBehavior();
-	_task02.startBehavior();
+    _task02.startBehavior();
 }

@@ -40,7 +40,6 @@ XFDispatcherActiveDefault::XFDispatcherActiveDefault() :
 XFDispatcherActiveDefault::~XFDispatcherActiveDefault()
 {
     _bExecuting = false;
-    //_pThread->stop();
 }
 
 void XFDispatcherActiveDefault::initialize()

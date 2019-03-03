@@ -65,7 +65,7 @@ void XFTimeoutManagerDefault::tick()
         if(_timeouts.front()->getRelTicks() <= 0){
             returnTimeout(_timeouts.front());
             if(_timeouts.front()->deleteAfterConsume() == true){
-                addTimeout(_timeouts.front());
+                //addTimeout(_timeouts.front());
             }
             _timeouts.pop_front();
          }
@@ -92,7 +92,7 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
             /// find the correct place to insert the new timeout
             if(relTickTot > pNewTimeout->getInterval()){
                 /// set relative tick of new timeout
-                pNewTimeout->setRelTicks(relTickTot-pNewTimeout->getInterval());
+                pNewTimeout->setRelTicks(pNewTimeout->getInterval()- (relTickTot - timeout->getRelTicks()));
                 /// insert new timeout before the actual pointer of timeout
                 auto it = std::find(_timeouts.begin(), _timeouts.end(), timeout);
                 if (it != _timeouts.end()) {

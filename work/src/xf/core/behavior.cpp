@@ -46,7 +46,7 @@ XFBehavior::~XFBehavior()
  */
 void XFBehavior::startBehavior()
 {
-    pushEvent(new XFEvent(XFEvent::Initial, 1,this));
+    pushEvent(new XFInitialEvent());
 }
 
 /**
