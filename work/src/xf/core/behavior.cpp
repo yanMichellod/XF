@@ -55,6 +55,7 @@ void XFBehavior::startBehavior()
  */
 void XFBehavior::pushEvent(XFEvent *pEvent)
 {
+    pEvent->setBehavior(this);
     if(_pDispatcher == nullptr){
         interface::XFResourceFactory::getInstance()->getDefaultDispatcher()->pushEvent(pEvent);
     }

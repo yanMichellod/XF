@@ -12,7 +12,7 @@
 class evRestart : public XFCustomEvent
 {
 public:
-    evRestart(interface::XFReactive *pBehavior);
+    evRestart();
 	virtual ~evRestart();
 };
 

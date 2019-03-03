@@ -24,7 +24,7 @@ public:
 	 *
 	 * \param pBehavior Behavior in which the null transition will be executed.
 	 */
-	XFNullTransition(interface::XFReactive * pBehavior = nullptr);
+    XFNullTransition();
 	virtual ~XFNullTransition();
 
 	bool deleteAfterConsume() const override;

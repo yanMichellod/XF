@@ -30,7 +30,7 @@ XFEventStatus StateMachine01::processEvent()
 		{
 			if (getCurrentEvent()->getEventType() == XFEvent::Initial)
 			{
-                GEN(XFNullTransition(this));
+                GEN(XFNullTransition());
 
 				_currentState = STATE_SAY_HELLO;
 
