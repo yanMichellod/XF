@@ -54,4 +54,10 @@ interface::XFDispatcher *XF::getDefaultDispatcher()
     return XFResourceFactory::getInstance()->getDefaultDispatcher();
 }
 
+int XF::kill()
+{
+    XF::_app->exit();
+    return 0;
+}
+
 #endif // USE_XF_PORT_IDF_QT_XF_IMPLEMENTATION

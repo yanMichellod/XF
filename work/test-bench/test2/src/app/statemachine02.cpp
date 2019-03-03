@@ -33,7 +33,7 @@ XFEventStatus StateMachine02::processEvent()
 					counter = 5;
 				}
 
-				GEN(XFNullTransition());
+                GEN(XFNullTransition(this));
 
 				_currentState = STATE_PRINT_COUNT;
 
@@ -75,7 +75,7 @@ XFEventStatus StateMachine02::processEvent()
 					_currentState = STATE_TERMINATION_01;
 				}
 
-				GEN(XFNullTransition());
+                GEN(XFNullTransition(this));
 
 				eventStatus = XFEventStatus::Consumed;
 			}

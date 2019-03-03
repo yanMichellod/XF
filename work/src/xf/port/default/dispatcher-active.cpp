@@ -12,6 +12,7 @@
 #include "xf/interface/reactive.h"
 #include "xf/interface/thread.h"
 #include "xf/interface/resourcefactory.h"
+#include "xf/xf.h"
 #include "dispatcher-active.h"
 
 using interface::XFTimeoutManager;
@@ -39,7 +40,7 @@ XFDispatcherActiveDefault::XFDispatcherActiveDefault() :
 XFDispatcherActiveDefault::~XFDispatcherActiveDefault()
 {
     _bExecuting = false;
-    _pThread->stop();
+    //_pThread->stop();
 }
 
 void XFDispatcherActiveDefault::initialize()
@@ -59,7 +60,8 @@ void XFDispatcherActiveDefault::start()
 void XFDispatcherActiveDefault::stop()
 {
     _bExecuting = false;
-    _pThread->suspend();
+    _pThread->stop();
+    XF::kill();
 }
 
 void XFDispatcherActiveDefault::pushEvent(XFEvent * pEvent)
@@ -121,6 +123,9 @@ void XFDispatcherActiveDefault::dispatchEvent(const XFEvent * pEvent) const
     if(status == XFEventStatus::Consumed){
         /// delete the consumed Event
         delete pEvent;
+    }
+    else if(status == XFEventStatus::Terminate){
+        interface::XFResourceFactory::getInstance()->getDefaultDispatcher()->stop();
     }
 }
 
