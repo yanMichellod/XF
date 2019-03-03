@@ -9,7 +9,6 @@
 
 using interface::XFResourceFactory;
 QCoreApplication* XF::_app = nullptr;
-// TODO: Implement code for XF class
 /**
  * @brief initialize all object needed to run the application
  * Initialise the timeoutManager and the dispatcher then run the thread to execute the timer

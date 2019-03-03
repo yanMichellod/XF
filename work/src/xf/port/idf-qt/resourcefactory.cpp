@@ -10,8 +10,7 @@
 #include "resourcefactory.h"
 
 ///Static Function
-// TODO: Implement code for XFResourceFactoryPort class
-
+///
 interface::XFResourceFactory *interface::XFResourceFactory::getInstance()
 {
     return XFResourceFactoryPort::getInstance();
@@ -36,7 +35,6 @@ interface::XFDispatcher *XFResourceFactoryPort::getDefaultDispatcher()
 {
     static interface::XFDispatcher* dispatcherInstance = nullptr;
     if(dispatcherInstance == nullptr){
-        Trace::out("Create dispatcher...\n---------------------");
         dispatcherInstance = createDispatcher();
     }
     return dispatcherInstance;

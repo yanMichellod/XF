@@ -62,11 +62,7 @@ void XFTimeoutManagerDefault::tick()
     if(!_timeouts.empty()){
         _timeouts.front()->substractFromRelTicks(getTickInterval());
         /// the event is timeout
-        if(_timeouts.front()->getRelTicks() == 0){
-            /**
-            * WORK IN PROGRESS
-            * DON'T SURE IT WORKS
-            */
+        if(_timeouts.front()->getRelTicks() <= 0){
             returnTimeout(_timeouts.front());
             if(_timeouts.front()->deleteAfterConsume() == true){
                 addTimeout(_timeouts.front());
@@ -79,6 +75,7 @@ void XFTimeoutManagerDefault::tick()
 void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
 {
     /// WARNING !!!!! Maybe the mutex must protect all this method
+    /// Work for test01
     /// if the timeout is the first in the list
     if(_timeouts.empty() == true){
         pNewTimeout->setRelTicks(pNewTimeout->getInterval());
@@ -124,6 +121,7 @@ void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFRea
     /// erase timeout according to it Id and it XFReactive
     _pMutex->lock();
     /// WARNING DON'T SURE IT WORK
+    /// Work for test01
     /// IN NO WORKING CASE USE ERASE METHOD FROM STD::LIST WITH ITERATOR
     for(XFTimeout*  temp: _timeouts){
         /// find the timeout to remove
@@ -145,8 +143,6 @@ void XFTimeoutManagerDefault::returnTimeout(XFTimeout *pTimeout)
     pTimeout->getBehavior()->pushEvent(pTimeout);
 }
 
-
-// TODO: Implement code for XFTimeoutManagerDefault class
 
 #endif // USE_XF_TIMEOUTMANAGER_DEFAULT_IMPLEMENTATION
 

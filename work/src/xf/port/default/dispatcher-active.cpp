@@ -72,7 +72,7 @@ void XFDispatcherActiveDefault::pushEvent(XFEvent * pEvent)
     _pMutex->lock();
     {
 //#if (XF_TRACE_EVENT_PUSH_POP != 0)
-        Trace::out("Push event: 0x%x  \n---------------------", pEvent);
+        //Trace::out("Push event: 0x%x  \n---------------------", pEvent);
 //#endif // XF_TRACE_EVENT_PUSH_POP
         _events.push(pEvent);
     }
@@ -119,7 +119,8 @@ void XFDispatcherActiveDefault::dispatchEvent(const XFEvent * pEvent) const
     // TODO: Implement code
     XFEventStatus status = pEvent->getBehavior()->process(pEvent);
     if(status == XFEventStatus::Consumed){
-        Trace::out("Event consumed  \n---------------------");
+        /// delete the consumed Event
+        delete pEvent;
     }
 }
 

@@ -16,8 +16,6 @@
  * Threads must be explicitly started with start()!
  */
 
-// TODO: Implement code for XFThreadPort class
-
 /**
  * @brief Constructor of the XFThreadPort
  * @param pProvider Provider of the method to execute

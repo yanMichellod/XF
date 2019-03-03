@@ -63,7 +63,7 @@ const XFEvent *XFEventQueuePort::front()
 }
 
 /**
- * @brief Method to pop the next event
+ * @brief Method to pop the event of the list
  */
 void XFEventQueuePort::pop()
 {
