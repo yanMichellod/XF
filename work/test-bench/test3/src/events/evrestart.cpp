@@ -1,6 +1,6 @@
 #include "evrestart.h"
 
-evRestart::evRestart() : XFCustomEvent(EventId::evRestart)
+evRestart::evRestart(interface::XFReactive *pBehavior) : XFCustomEvent(EventId::evRestart, pBehavior)
 {
 }
 

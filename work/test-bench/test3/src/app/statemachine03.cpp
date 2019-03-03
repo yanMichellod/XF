@@ -26,7 +26,7 @@ XFEventStatus StateMachine03::processEvent()
 		{
 			if (getCurrentEvent()->getEventType() == XFEvent::Initial)
 			{
-				GEN(XFNullTransition());
+                GEN(XFNullTransition(this));
 
 				_currentState = STATE_WAIT;
 				eventStatus = XFEventStatus::Consumed;
@@ -57,7 +57,7 @@ XFEventStatus StateMachine03::processEvent()
 			{
 				{
 					Trace::out("Wait restart");
-					GEN(evRestart());
+                    GEN(evRestart(this));
 				}
 
 				_currentState = STATE_WAIT;
