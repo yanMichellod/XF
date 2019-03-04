@@ -62,13 +62,14 @@ void XFTimeoutManagerDefault::tick()
     if(!_timeouts.empty()){
         _timeouts.front()->substractFromRelTicks(getTickInterval());
         /// the event is timeout
-        if(_timeouts.front()->getRelTicks() <= 0){
+        while((!_timeouts.empty()) && (_timeouts.front()->getRelTicks() <= 0)){
             returnTimeout(_timeouts.front());
-            if(_timeouts.front()->deleteAfterConsume() == true){
-                //addTimeout(_timeouts.front());
-            }
             _timeouts.pop_front();
          }
+        //if(_timeouts.front()->getRelTicks() <= 0){
+        //    returnTimeout(_timeouts.front());
+        //    _timeouts.pop_front();
+        // }
     }
 }
 
@@ -90,7 +91,7 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
         for(XFTimeout* timeout : _timeouts){
             relTickTot = relTickTot + timeout->getRelTicks();
             /// find the correct place to insert the new timeout
-            if(relTickTot > pNewTimeout->getInterval()){
+            if(!inserted && relTickTot > pNewTimeout->getInterval()){
                 /// set relative tick of new timeout
                 pNewTimeout->setRelTicks(pNewTimeout->getInterval()- (relTickTot - timeout->getRelTicks()));
                 /// insert new timeout before the actual pointer of timeout
@@ -99,9 +100,9 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
                     _timeouts.insert(it, pNewTimeout);
                     inserted = true;
                 }
-            }
-            if(inserted){
-                timeout->setRelTicks(timeout->getRelTicks()-pNewTimeout->getRelTicks());
+               if(inserted){
+                    timeout->setRelTicks(timeout->getRelTicks()-pNewTimeout->getRelTicks());
+               }
             }
         }
         _pMutex->unlock();

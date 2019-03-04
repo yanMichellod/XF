@@ -32,8 +32,8 @@ void TestFactory05::build()
 	Trace::out("Starting test5...\n---------------------");
 
 	// Start state machine(s)
-	_task01.startBehavior();
-	_task02.startBehavior();
-	_task03.startBehavior();
-	_task04.startBehavior();
+    _task01.startBehavior();
+    _task02.startBehavior();
+    _task03.startBehavior();
+    _task04.startBehavior();
 }
