@@ -18,6 +18,10 @@
 using interface::XFTimeoutManager;
 using interface::XFResourceFactory;
 
+/**
+ * @brief XFDispatcherActiveDefault::XFDispatcherActiveDefault
+ * Constructor of the default dispatcher which contains a thread and a mutex
+ */
 XFDispatcherActiveDefault::XFDispatcherActiveDefault() :
     _bInitialized(false),
     _bExecuting(false),
@@ -37,25 +41,40 @@ XFDispatcherActiveDefault::XFDispatcherActiveDefault() :
     }
 }
 
+/**
+ * @brief XFDispatcherActiveDefault::~XFDispatcherActiveDefault
+ * Destructor of the default dispatcher
+ */
 XFDispatcherActiveDefault::~XFDispatcherActiveDefault()
 {
     _bExecuting = false;
 }
 
+/**
+ * @brief XFDispatcherActiveDefault::initialize
+ * All object needed for this class is create in the Constructor
+ */
 void XFDispatcherActiveDefault::initialize()
 {
 }
 
+/**
+ * @brief XFDispatcherActiveDefault::start start the thread to execute XFDispatcherActiveDefault::execute()
+ */
 void XFDispatcherActiveDefault::start()
 {
     assert(_pThread);
-    assert(_pMutex);        // Call initialize() first
+    assert(_pMutex);
     _bExecuting = true;
     _pThread->start();
 
 
 }
 
+/**
+ * @brief XFDispatcherActiveDefault::stop
+ * stop the thread and the main thread
+ */
 void XFDispatcherActiveDefault::stop()
 {
     _bExecuting = false;
@@ -63,6 +82,10 @@ void XFDispatcherActiveDefault::stop()
     XF::kill();
 }
 
+/**
+ * @brief XFDispatcherActiveDefault::pushEvent
+ * @param pEvent event to push in the list of event to dispatch
+ */
 void XFDispatcherActiveDefault::pushEvent(XFEvent * pEvent)
 {
     if (!_bInitialized)
@@ -72,26 +95,40 @@ void XFDispatcherActiveDefault::pushEvent(XFEvent * pEvent)
 
     _pMutex->lock();
     {
-//#if (XF_TRACE_EVENT_PUSH_POP != 0)
-        //Trace::out("Push event: 0x%x  \n---------------------", pEvent);
-//#endif // XF_TRACE_EVENT_PUSH_POP
         _events.push(pEvent);
     }
     _pMutex->unlock();
 }
 
+/**
+ * @brief XFDispatcherActiveDefault::scheduleTimeout Schedule timeout
+ * @param timeoutId Id of the timeout
+ * @param interval interval in milliseconds the timeout must wait
+ * @param pReactive the reactive class where the timeout must be launch
+ */
 void XFDispatcherActiveDefault::scheduleTimeout(int timeoutId, int interval, interface::XFReactive * pReactive)
 {
     // Forward timeout to the timeout manager
     XFTimeoutManager::getInstance()->scheduleTimeout(timeoutId, interval, pReactive);
 }
 
+/**
+ * @brief XFDispatcherActiveDefault::unscheduleTimeout unschedule timeout
+ * @param timeoutId Id of the timeout to cancel
+ * @param pReactive the reactive class where the timeout must be launch
+ */
 void XFDispatcherActiveDefault::unscheduleTimeout(int timeoutId, interface::XFReactive * pReactive)
 {
     // Forward timeout to the timeout manager
     XFTimeoutManager::getInstance()->unscheduleTimeout(timeoutId, pReactive);
 }
 
+/**
+ * @brief XFDispatcherActiveDefault::execute method executed by the tread
+ * this blocking method wait until an event is pushed in the list of event
+ * @param param
+ * @return
+ */
 int XFDispatcherActiveDefault::execute(const void * param /* = nullptr */)
 {
     (void)param;
@@ -108,13 +145,22 @@ int XFDispatcherActiveDefault::execute(const void * param /* = nullptr */)
     return 0;
 }
 
+/**
+ * @brief XFDispatcherActiveDefault::executeOnce called by execute() to dispatch only one event
+ * @return
+ */
 int XFDispatcherActiveDefault::executeOnce()
 {
     // TODO: Implement code
     dispatchEvent(_events.front());
     return _bExecuting;
 }
-
+/**
+ * @brief XFDispatcherActiveDefault::dispatchEvent Dispatch the event to the right activ class.
+ * The event is deleted if it was consumed.
+ * The dispatcher is stopped if the class which process the event send back a XFEventStatus::Terminate
+ * @param pEvent Event to dispatch
+ */
 void XFDispatcherActiveDefault::dispatchEvent(const XFEvent * pEvent) const
 {
     // TODO: Implement code

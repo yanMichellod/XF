@@ -103,7 +103,7 @@ const XFTimeout* XFBehavior::getCurrentTimeout()
 
 /**
  * @brief XFBehavior::setCurrentEvent
- * @param pEvent Event to
+ * @param pEvent Event to manage
  */
 void XFBehavior::setCurrentEvent(const XFEvent *pEvent)
 {

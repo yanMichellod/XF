@@ -66,17 +66,12 @@ void XFTimeoutManagerDefault::tick()
             returnTimeout(_timeouts.front());
             _timeouts.pop_front();
          }
-        //if(_timeouts.front()->getRelTicks() <= 0){
-        //    returnTimeout(_timeouts.front());
-        //    _timeouts.pop_front();
-        // }
     }
 }
 
 void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
 {
-    /// WARNING !!!!! Maybe the mutex must protect all this method
-    /// Work for test01
+
     /// if the timeout is the first in the list
     if(_timeouts.empty() == true){
         pNewTimeout->setRelTicks(pNewTimeout->getInterval());
@@ -100,6 +95,7 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
                     _timeouts.insert(it, pNewTimeout);
                     inserted = true;
                 }
+                /// set the relative ticks of the next timeout
                if(inserted){
                     timeout->setRelTicks(timeout->getRelTicks()-pNewTimeout->getRelTicks());
                }
@@ -121,9 +117,6 @@ void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFRea
     bool removed = false;
     /// erase timeout according to it Id and it XFReactive
     _pMutex->lock();
-    /// WARNING DON'T SURE IT WORK
-    /// Work for test01
-    /// IN NO WORKING CASE USE ERASE METHOD FROM STD::LIST WITH ITERATOR
     for(XFTimeout*  temp: _timeouts){
         /// find the timeout to remove
         if(*temp == timeoutToRemove){

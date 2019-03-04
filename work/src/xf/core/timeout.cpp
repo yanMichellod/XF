@@ -10,7 +10,12 @@ XFTimeout::~XFTimeout()
 {
 
 }
-
+/**
+ * @brief XFTimeout::operator == surcharged operator == to comparate two timeout
+ * @param timeout
+ * @return true if the two timeout have the same behavior and the same id
+ *         otherwise false
+ */
 bool XFTimeout::operator ==(const XFTimeout &timeout) const
 {
     if((_pBehavior == timeout.getBehavior()) && (_id == timeout.getId())){
@@ -21,5 +26,5 @@ bool XFTimeout::operator ==(const XFTimeout &timeout) const
 
 bool XFTimeout::deleteAfterConsume() const
 {
-    return false;
+    return true;
 }
