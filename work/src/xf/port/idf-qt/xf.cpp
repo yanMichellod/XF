@@ -41,7 +41,6 @@ int XF::exec()
  */
 int XF::execOnce()
 {
-    getDefaultDispatcher()->executeOnce();
     return 1;
 }
 

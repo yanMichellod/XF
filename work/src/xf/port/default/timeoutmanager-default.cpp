@@ -12,22 +12,38 @@
 
 using interface::XFResourceFactory;
 
+/**
+ * @brief XFTimeoutManagerDefault::XFTimeoutManagerDefault
+ * Constructor of XFTimeoutManagerDefault create mutex
+ */
 XFTimeoutManagerDefault::XFTimeoutManagerDefault():_timeouts()
 {
     _pMutex = interface::XFResourceFactory::getInstance()->createMutex();
 }
 
-
+/**
+ * @brief XFTimeoutManagerDefault::~XFTimeoutManagerDefault
+ * Destructor of XFTimeoutManagerDefault delete all object
+ */
 XFTimeoutManagerDefault::~XFTimeoutManagerDefault()
 {
     delete _pMutex;
 }
 
+/**
+ * @brief interface::XFTimeoutManager::getInstance
+ * @return An Instance of XFTimeoutmanager
+ */
 interface::XFTimeoutManager * interface::XFTimeoutManager::getInstance()
 {
 	return XFTimeoutManagerDefault::getInstance();
 }
 
+/**
+ * @brief XFTimeoutManagerDefault::getInstance
+ * Singleton pattern to get a unique instance of an XFTimeoutManager
+ * @return An instance of XFTimeoutManagerDefault
+ */
 interface::XFTimeoutManager *XFTimeoutManagerDefault::getInstance()
 {
     static interface::XFTimeoutManager* instance = nullptr;
@@ -37,11 +53,22 @@ interface::XFTimeoutManager *XFTimeoutManagerDefault::getInstance()
     return instance;
 }
 
+/**
+ * @brief XFTimeoutManagerDefault::start
+ * Start the timer
+ */
 void XFTimeoutManagerDefault::start()
 {
     XF_startTimeoutManagerTimer(getTickInterval());
 }
 
+/**
+ * @brief XFTimeoutManagerDefault::scheduleTimeout
+ * Schedule a Timeout an put it in the list
+ * @param timeoutId Id of the timeout
+ * @param interval Interval in millisecond the timeout must pop
+ * @param pReactive The pointer to the class to send the timeout
+ */
 void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interval, interface::XFReactive *pReactive)
 {
     /// create tempTimout to insert in the list
@@ -50,12 +77,22 @@ void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interva
     addTimeout(tempTimeout);
 }
 
+/**
+ * @brief XFTimeoutManagerDefault::unscheduleTimeout
+ * Unschedule a timeout with it Id and it pReactive
+ * @param timeoutId Id of the timeout
+ * @param pReactive The pointer to the class to send the timeout
+ */
 void XFTimeoutManagerDefault::unscheduleTimeout(int32_t timeoutId, interface::XFReactive *pReactive)
 {
     /// call removeTimeouts method
     removeTimeouts(timeoutId, pReactive);
 }
 
+/**
+ * @brief XFTimeoutManagerDefault::tick
+ * called by the callback method of a timer to decrement the first element of the list
+ */
 void XFTimeoutManagerDefault::tick()
 {
     ///substract relative tick of the first element of the list if the list is not empty
@@ -69,9 +106,13 @@ void XFTimeoutManagerDefault::tick()
     }
 }
 
+/**
+ * @brief XFTimeoutManagerDefault::addTimeout
+ * add timeout in the list
+ * @param pNewTimeout the new timeout to put inside the list
+ */
 void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
 {
-
     /// if the timeout is the first in the list
     if(_timeouts.empty() == true){
         pNewTimeout->setRelTicks(pNewTimeout->getInterval());
@@ -110,6 +151,12 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
     }
 }
 
+/**
+ * @brief XFTimeoutManagerDefault::removeTimeouts
+ * Allow to remove a timeout of the list
+ * @param timeoutId Id of the timeout to remove
+ * @param pReactive pReactive of the timeout to remove
+ */
 void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFReactive *pReactive)
 {
     XFTimeout timeoutToRemove(timeoutId,0,pReactive);
@@ -132,6 +179,11 @@ void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFRea
     _pMutex->unlock();
 }
 
+/**
+ * @brief XFTimeoutManagerDefault::returnTimeout
+ * return the timeout inside the queue of the dispatcher
+ * @param pTimeout timeout to dispatch
+ */
 void XFTimeoutManagerDefault::returnTimeout(XFTimeout *pTimeout)
 {
     pTimeout->getBehavior()->pushEvent(pTimeout);
