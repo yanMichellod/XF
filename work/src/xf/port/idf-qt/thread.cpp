@@ -28,6 +28,7 @@ XFThreadPort::XFThreadPort(interface::XFThreadEntryPointProvider *pProvider, int
     _pEntryMethodProvider = pProvider;
     _entryMethod = entryMethod;
     setStackSize(stackSize);
+    setObjectName(threadName);
 }
 
 /**
