@@ -11,6 +11,13 @@
 using interface::XFResourceFactory;
 using interface::XFTimeoutManager;
 
-// TODO: Implement code for XF class
-
+void XF_initialize(int timeInterval){
+	XF::initialize(timeInterval);
+}
+void XF_exec(){
+	XF::exec();
+}
+void XF_execOnce(){
+	XF::execOnce();
+}
 #endif // USE_XF_DEFAULT_IMPLEMENTATION
