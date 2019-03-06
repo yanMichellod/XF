@@ -18,6 +18,14 @@ void XF_startTimeoutManagerTimer(uint32_t tickInterval)
     // So nothing to do here.
 }
 
+void XF_tick(){
+	interface::XFTimeoutManager::getInstance()->tick();
+}
+
+int32_t XF_tickIntervalInMilliseconds(){
+	return interface::XFTimeoutManager::getInstance()->getTickInterval();
+}
+
 // TODO: Implement XF_tick() and XF_tickIntervalInMilliseconds() function
 
 #endif // USE_XF_PORT_IDF_STM32CUBE_PORT_FUNCTIONS_IMPLEMENTATION

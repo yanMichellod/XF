@@ -20,4 +20,30 @@ void XF_exec(){
 void XF_execOnce(){
 	XF::execOnce();
 }
+
+void XF::initialize(int timeInterval, int argc, char* argv[]) {
+	interface::XFResourceFactory::getInstance()->getDefaultDispatcher()->start();
+	interface::XFTimeoutManager::getInstance()->initialize(timeInterval);
+	interface::XFTimeoutManager::getInstance()->start();
+}
+
+int XF::exec() {
+	while(true){
+
+	}
+}
+
+int XF::execOnce() {
+	interface::XFResourceFactory::getInstance()->getDefaultDispatcher()->executeOnce();
+	return 1;
+}
+
+interface::XFDispatcher* XF::getDefaultDispatcher() {
+	return interface::XFResourceFactory::getInstance()->getDefaultDispatcher();
+}
+
+int XF::kill() {
+	return 1;
+}
+
 #endif // USE_XF_DEFAULT_IMPLEMENTATION

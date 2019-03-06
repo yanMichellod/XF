@@ -9,6 +9,7 @@
 #include "xf/interface/timeoutmanager.h"
 #include "xf/interface/reactive.h"
 #include "xf/interface/resourcefactory.h"
+#include "mdw/trace/trace.h"
 #include "dispatcher-default.h"
 
 using interface::XFTimeoutManager;
@@ -44,10 +45,10 @@ void XFDispatcherDefault::pushEvent(XFEvent * pEvent){
 }
 
 void XFDispatcherDefault::scheduleTimeout(int timeoutId, int interval, interface::XFReactive * pReactive){
-	XFTimeoutManagerDefault::getInstance()->scheduleTimeout(timeoutId, interval, pReactive);
+	interface::XFTimeoutManager::getInstance()->scheduleTimeout(timeoutId, interval, pReactive);
 }
 void XFDispatcherDefault::unscheduleTimeout(int timeoutId, interface::XFReactive * pReactive){
-	XFTimeoutManagerDefault::getInstance()->unscheduleTimeout(timeoutId, pReactive);
+	interface::XFTimeoutManager::getInstance()->unscheduleTimeout(timeoutId, pReactive);
 }
 
 int XFDispatcherDefault::executeOnce(){
@@ -56,11 +57,12 @@ int XFDispatcherDefault::executeOnce(){
 	}
 	return 1;
 }
-int XFDispatcherDefault::execute(const void * param = nullptr){
+int XFDispatcherDefault::execute(const void * param){
 	return 0;
 }
 void XFDispatcherDefault::dispatchEvent(const XFEvent * pEvent) const{
 	XFEventStatus status = pEvent->getBehavior()->process(pEvent);
+	trace_out("dispatch an event");
 	if(status == XFEventStatus::Consumed){
 		delete pEvent;
 		pEvent = nullptr;

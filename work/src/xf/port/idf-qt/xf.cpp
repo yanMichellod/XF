@@ -8,7 +8,7 @@
 #include "xf/xf.h"
 
 using interface::XFResourceFactory;
-QCoreApplication* XF::_app = nullptr;
+static QCoreApplication* _app;
 /**
  * @brief initialize all object needed to run the application
  * Initialise the timeoutManager and the dispatcher then run the thread to execute the timer
@@ -18,7 +18,7 @@ QCoreApplication* XF::_app = nullptr;
  */
 void XF::initialize(int timeInterval, int argc, char *argv[])
 {
-    XF::_app = new QCoreApplication(argc, argv);
+    QCoreApplication* _app = new QCoreApplication(argc, argv);
     getDefaultDispatcher()->start();
     interface::XFTimeoutManager::getInstance()->initialize(timeInterval);
     interface::XFTimeoutManager::getInstance()->start();
@@ -31,7 +31,7 @@ void XF::initialize(int timeInterval, int argc, char *argv[])
  */
 int XF::exec()
 {
-    XF::_app->exec();
+    _app->exec();
     return 1;
 }
 
@@ -61,7 +61,7 @@ int XF::kill()
     delete interface::XFResourceFactory::getInstance()->getDefaultDispatcher();
     delete interface::XFResourceFactory::getInstance();
     delete interface::XFTimeoutManager::getInstance();
-    XF::_app->exit();
+    _app->exit();
     return 0;
 }
 

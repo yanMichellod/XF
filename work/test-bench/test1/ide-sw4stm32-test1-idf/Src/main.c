@@ -113,6 +113,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 /* USER CODE BEGIN 0 */
 #include "xf/xf.h"
 #include "app/testfactory01.h"
+#include "mdw/trace/trace.h"
 
 /* USER CODE END 0 */
 
@@ -142,6 +143,7 @@ int main(void)
   /* USER CODE BEGIN SysInit */
   XF_initialize(20);
   Factory_initialize();
+  trace_initialize();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -171,6 +173,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  trace_out("main loop begin");
   while (1)
   {
 
