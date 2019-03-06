@@ -15,25 +15,25 @@ XFMutexDefault::XFMutexDefault(){
 /**
  * Destructor of XFMutexDefault
  */
-virtual XFMutexDefault::~XFMutexDefault(){
+XFMutexDefault::~XFMutexDefault(){
 
 }
 
 /**
  * lock the mutex
  */
-virtual void XFMutexDefault::lock(){
+void XFMutexDefault::lock(){
 	enterCritical();
 }
 
 /**
  * unlock the mutex
  */
-virtual void XFMutexDefault::unlock(){
+void XFMutexDefault::unlock(){
 	exitCritical();
 }
 
-virtual bool XFMutexDefault::tryLock(int32_t timeout = 0){
+bool XFMutexDefault::tryLock(int32_t timeout){
 
 	return true;
 }

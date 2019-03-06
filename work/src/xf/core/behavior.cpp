@@ -26,10 +26,14 @@ XFBehavior::XFBehavior(interface::XFDispatcher *pDispatcher)
  */
 XFBehavior::XFBehavior(bool ownDispatcher)
 {
-    if(ownDispatcher){
+    if(!ownDispatcher){
         _pDispatcher = nullptr;
         _isActive = false;
         _pCurrentEvent = nullptr;
+    }
+    else{
+        _pDispatcher = interface::XFResourceFactory::getInstance()->createDispatcher();
+        _isActive = true;
     }
 }
 
@@ -38,7 +42,9 @@ XFBehavior::XFBehavior(bool ownDispatcher)
  */
 XFBehavior::~XFBehavior()
 {
-
+    if(_isActive){
+        delete _pDispatcher;
+    }
 }
 
 /**

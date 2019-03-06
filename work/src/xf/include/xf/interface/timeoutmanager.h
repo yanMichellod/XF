@@ -2,7 +2,6 @@
 #define XF_INTERFACE_TIMEOUTMANAGER_H
 
 #include <stdint.h>
-#include <QObject>
 
 namespace interface {
     class XFReactive;

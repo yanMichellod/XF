@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;ide-sw4stm32-test1-idf&apos;" deleteContents="false" description="Delete resource &apos;ide-sw4stm32-test1-idf&apos;" element1="/ide-sw4stm32-test1-idf" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1551870878227"/>
+</session>

@@ -34,7 +34,6 @@ protected:
 	XFResourceFactoryDefault() {}
 
 protected:
-	XFDispatcherDefault _mainDispatcher;		///< The default/main dispatcher.
 };
 
 /** @} */ // end of port_default group

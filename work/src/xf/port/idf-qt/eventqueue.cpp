@@ -7,6 +7,7 @@
 #include <QtGlobal>
 #include <QMutexLocker>
 #include "eventqueue.h"
+#include "xf/event.h"
 
 // TODO: Implement code for XFEventQueuePort class
 
@@ -25,7 +26,12 @@ XFEventQueuePort::XFEventQueuePort():_mutex(),_newEvents(),_queue()
  */
 XFEventQueuePort::~XFEventQueuePort()
 {
-
+    for(auto e : _queue){
+        if(e){
+            delete e;
+            e = nullptr;
+        }
+    }
 }
 
 /**

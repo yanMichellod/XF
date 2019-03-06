@@ -9,6 +9,7 @@
 #include "xf/interface/resourcefactory.h"
 #include "port-functions.h"
 #include "timeoutmanager-default.h"
+#include <algorithm>
 
 using interface::XFResourceFactory;
 
@@ -28,6 +29,12 @@ XFTimeoutManagerDefault::XFTimeoutManagerDefault():_timeouts()
 XFTimeoutManagerDefault::~XFTimeoutManagerDefault()
 {
     delete _pMutex;
+    for(auto t : _timeouts){
+        if(t){
+            delete t;
+            t = nullptr;
+        }
+    }
 }
 
 /**
@@ -169,10 +176,12 @@ void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFRea
         if(*temp == timeoutToRemove){
             removedRelTick = temp->getRelTicks();
             _timeouts.remove(temp);
+            delete temp;
+            temp = nullptr;
             removed = true;
         }
        /// add relTick of the element removed in the list at the other element next to him
-        if(removed){
+        if(removed && temp){
             temp->addToRelTicks(removedRelTick);
         }
     }

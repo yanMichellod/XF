@@ -2,7 +2,6 @@
 #define XF_INTERFACE_DISPATCHER_H
 
 #include "xf/event.h"
-#include <QObject>
 
 
 class XF;
