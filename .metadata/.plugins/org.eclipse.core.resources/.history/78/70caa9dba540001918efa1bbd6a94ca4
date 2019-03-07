@@ -65,6 +65,7 @@ void XFDispatcherDefault::dispatchEvent(const XFEvent * pEvent) const{
 	XFEventStatus status = pEvent->getBehavior()->process(pEvent);
 	//trace_out("dispatch an event");
 	if(status == XFEventStatus::Consumed){
+		trace_out("ev consumed");
 		delete pEvent;
 		pEvent = nullptr;
 	}

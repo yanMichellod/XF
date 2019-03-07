@@ -54,7 +54,6 @@ void XFDispatcherDefault::unscheduleTimeout(int timeoutId, interface::XFReactive
 int XFDispatcherDefault::executeOnce(){
 	if(!_events.empty()){
 		dispatchEvent(_events.front());
-		_events.pop();
 	}
 	return 1;
 }
@@ -63,7 +62,7 @@ int XFDispatcherDefault::execute(const void * param){
 }
 void XFDispatcherDefault::dispatchEvent(const XFEvent * pEvent) const{
 	XFEventStatus status = pEvent->getBehavior()->process(pEvent);
-	//trace_out("dispatch an event");
+	trace_out("dispatch an event");
 	if(status == XFEventStatus::Consumed){
 		delete pEvent;
 		pEvent = nullptr;
