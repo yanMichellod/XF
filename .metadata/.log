@@ -343,3 +343,6 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.launchbar.core 2 0 2019-03-07 07:46:28.453
 !MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.cdt.core 1 0 2019-03-07 07:59:30.865
+!MESSAGE Indexed 'ide-sw4stm32-test2-idf' (56 sources, 301 headers) in 10.5 sec: 29 427 declarations; 101 990 references; 0 unresolved inclusions; 1 syntax errors; 7 unresolved names (0.0053%)

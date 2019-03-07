@@ -69,7 +69,7 @@ void XFDispatcherDefault::dispatchEvent(const XFEvent * pEvent) const{
 		pEvent = nullptr;
 	}
 	else if(status == XFEventStatus::Terminate){
-
+		delete pEvent->getBehavior();
 	}
 }
 

@@ -1,0 +1,28 @@
+08:03:12 **** Incremental Build of configuration Debug for project ide-sw4stm32-test2-idf ****
+make -j8 all 
+Building file: C:/Users/yan.michello/Documents/GitHub/XF/work/src/xf/port/default/dispatcher-default.cpp
+Invoking: MCU G++ Compiler
+C:\Users\yan.michello\Documents\GitHub\XF\work\test-bench\test2\ide-sw4stm32-test2-idf\Debug
+arm-none-eabi-g++ -mcpu=cortex-m7 -mthumb -mfloat-abi=hard -mfpu=fpv5-sp-d16 '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F746xx -I"C:/Users/yan.michello/Documents/GitHub/XF/work/test-bench/test2/ide-sw4stm32-test2-idf/../src" -I"C:/Users/yan.michello/Documents/GitHub/XF/work/test-bench/test2/ide-sw4stm32-test2-idf/.." -I"C:/Users/yan.michello/Documents/GitHub/XF/work/test-bench/test2/ide-sw4stm32-test2-idf" -I"C:/Users/yan.michello/Documents/GitHub/XF/work/src/platform/f7-disco-gcc" -I"C:/Users/yan.michello/Documents/GitHub/XF/work/src/platform/f7-disco-gcc/mcu" -I"C:/Users/yan.michello/Documents/GitHub/XF/work/test-bench/test2/ide-sw4stm32-test2-idf/../../../src" -I"C:/Users/yan.michello/Documents/GitHub/XF/work/test-bench/test2/ide-sw4stm32-test2-idf/../../../src/xf/include" -I"C:/Users/yan.michello/Documents/GitHub/XF/work/test-bench/test2/ide-sw4stm32-test2-idf/../../../src/xf/port" -I"C:/Users/yan.michello/Documents/GitHub/XF/work/test-bench/test2/ide-sw4stm32-test2-idf/../../../src/mdw" -I"C:/Users/yan.michello/Documents/GitHub/XF/work/test-bench/test2/ide-sw4stm32-test2-idf/../../../src/mdw/trace" -I"C:/Users/yan.michello/Documents/GitHub/XF/work/test-bench/test2/ide-sw4stm32-test2-idf/Inc" -I"C:/Users/yan.michello/Documents/GitHub/XF/work/test-bench/test2/ide-sw4stm32-test2-idf/Drivers/STM32F7xx_HAL_Driver/Inc" -I"C:/Users/yan.michello/Documents/GitHub/XF/work/test-bench/test2/ide-sw4stm32-test2-idf/Drivers/STM32F7xx_HAL_Driver/Inc/Legacy" -I../Middlewares/ST/STM32_USB_Host_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Host_Library/Class/CDC/Inc -I"C:/Users/yan.michello/Documents/GitHub/XF/work/test-bench/test2/ide-sw4stm32-test2-idf/Drivers/CMSIS/Device/ST/STM32F7xx/Include" -I../Middlewares/Third_Party/FatFs/src -I"C:/Users/yan.michello/Documents/GitHub/XF/work/test-bench/test2/ide-sw4stm32-test2-idf/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fno-exceptions -fno-rtti -MMD -MP -MF"xf/port/default/dispatcher-default.d" -MT"xf/port/default/dispatcher-default.o" -o "xf/port/default/dispatcher-default.o" "C:/Users/yan.michello/Documents/GitHub/XF/work/src/xf/port/default/dispatcher-default.cpp"
+In file included from c:\users\yan.michello\documents\github\xf\work\src\mdw\trace\trace.h:6:0,
+                 from C:/Users/yan.michello/Documents/GitHub/XF/work/src/xf/port/default/dispatcher-default.cpp:12:
+c:\users\yan.michello\documents\github\xf\work\src\mdw\trace\config/trace-config.h:14:2: warning: #warning "No project specific trace configuration found! Taking default configuration!" [-Wcpp]
+ #warning "No project specific trace configuration found! Taking default configuration!"
+  ^~~~~~~
+Finished building: C:/Users/yan.michello/Documents/GitHub/XF/work/src/xf/port/default/dispatcher-default.cpp
+ 
+Building target: ide-sw4stm32-test2-idf.elf
+Invoking: MCU G++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m7 -mthumb -mfloat-abi=hard -mfpu=fpv5-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F746NGHx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -fno-exceptions -fno-rtti -o "ide-sw4stm32-test2-idf.elf" @"objects.list"   -lm
+Finished building target: ide-sw4stm32-test2-idf.elf
+ 
+make --no-print-directory post-build
+Generating binary and Printing size information:
+arm-none-eabi-objcopy -O binary "ide-sw4stm32-test2-idf.elf" "ide-sw4stm32-test2-idf.bin"
+arm-none-eabi-size "ide-sw4stm32-test2-idf.elf"
+   text	   data	    bss	    dec	    hex	filename
+  30448	    152	   6912	  37512	   9288	ide-sw4stm32-test2-idf.elf
+ 
+
+08:03:15 Build Finished (took 3s.313ms)
+
