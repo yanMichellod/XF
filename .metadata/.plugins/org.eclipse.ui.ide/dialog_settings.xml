@@ -5,6 +5,9 @@
 		<item value="false" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
 		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\Users\yan.michello\Documents\GitHub\XF\work\test-bench\test4\ide-sw4stm32-test4-idf"/>
+			<item value="C:\Users\yan.michello\Documents\GitHub\XF\work\test-bench\test3\ide-sw4stm32-test3-idf"/>
+			<item value="C:\Users\yan.michello\Documents\GitHub\XF\work\test-bench\test2\ide-sw4stm32-test2-idf"/>
 			<item value="C:\Users\yan.michello\Documents\GitHub\XF\work\test-bench\test1\ide-sw4stm32-test1-idf"/>
 			<item value="C:\Users\Yan Michellod\Documents\GitHub\XF\work\test-bench\test1\ide-sw4stm32-test1-idf"/>
 		</list>

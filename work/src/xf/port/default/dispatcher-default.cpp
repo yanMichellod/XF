@@ -48,6 +48,7 @@ void XFDispatcherDefault::scheduleTimeout(int timeoutId, int interval, interface
 	interface::XFTimeoutManager::getInstance()->scheduleTimeout(timeoutId, interval, pReactive);
 }
 void XFDispatcherDefault::unscheduleTimeout(int timeoutId, interface::XFReactive * pReactive){
+	trace_out("unschedule timeout");
 	interface::XFTimeoutManager::getInstance()->unscheduleTimeout(timeoutId, pReactive);
 }
 
