@@ -1,6 +1,6 @@
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
-configDescList=org.eclipse.launchbar.core.descriptorType.default\:ide-sw4stm32-test4-idf Debug
+configDescList=
 eclipse.preferences.version=1
 org.eclipse.launchbar.core.descriptorType.default\:ide-sw4stm32-test1-idf\ Debug/activeLaunchMode=run
 org.eclipse.launchbar.core.descriptorType.default\:ide-sw4stm32-test1-idf\ Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
@@ -10,3 +10,5 @@ org.eclipse.launchbar.core.descriptorType.default\:ide-sw4stm32-test3-idf\ Debug
 org.eclipse.launchbar.core.descriptorType.default\:ide-sw4stm32-test3-idf\ Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
 org.eclipse.launchbar.core.descriptorType.default\:ide-sw4stm32-test4-idf\ Debug/activeLaunchMode=run
 org.eclipse.launchbar.core.descriptorType.default\:ide-sw4stm32-test4-idf\ Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:ide-sw4stm32-test5-idf\ Debug/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:ide-sw4stm32-test5-idf\ Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local

@@ -25,7 +25,6 @@ XFEventStatus StateMachine04b::processEvent()
 	if (isRestartEvent())
 	{
 		// Remove any previous WAIT timeouts
-		trace_out("unschedule timeout");
         unscheduleTimeout(Timeout_WAIT_id);
 
 		_currentState = STATE_INITIAL;
@@ -43,7 +42,6 @@ XFEventStatus StateMachine04b::processEvent()
 				}
 
 				GEN(XFNullTransition());
-				trace_out("initial event of smb");
 				_currentState = STATE_WAIT;
 				eventStatus = XFEventStatus::Consumed;
 			}

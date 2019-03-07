@@ -166,36 +166,26 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
  */
 void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFReactive *pReactive)
 {
-	trace_out("timeout manager remove timeout");
     XFTimeout timeoutToRemove(timeoutId,0,pReactive);
     int removedRelTick = 0;
     bool removed = false;
     /// erase timeout according to it Id and it XFReactive
     _pMutex->lock();
-    trace_out("size of timeout : %d" , _timeouts.size());
-    for(XFTimeout*  temp: _timeouts){
-        /// find the timeout to remove
-        trace_out("inside remove loop");
-        trace_out("timeout : 0X%x ", temp);
-
-        if(*temp == timeoutToRemove){
-        	trace_out("compare = true");
-            removedRelTick = temp->getRelTicks();
-            _timeouts.remove(temp);
-            trace_out("size of timeout after remove : %d" , _timeouts.size());
-            delete temp;
-            temp = nullptr;
+    for(auto it = _timeouts.begin(); it != _timeouts.end();){
+    	if(*(*it) == timeoutToRemove){
+            removedRelTick = (*it)->getRelTicks();
+            it = _timeouts.erase(it);
             removed = true;
-        }
-       /// add relTick of the element removed in the list at the other element next to him
-        if(removed && temp){
-            temp->addToRelTicks(removedRelTick);
-            removed = false;
-        }
+    	}
+    	if(removed){
+    		(*it)->addToRelTicks(removedRelTick);
+    		removed = false;
+    	}
+    	else{
+    		it++;
+    	}
     }
-	trace_out("timeout manager remove end loop");
     _pMutex->unlock();
-	trace_out("timeout manager remove timeout finished");
 
 }
 
