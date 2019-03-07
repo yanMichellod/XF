@@ -35,6 +35,7 @@ XFTimeoutManagerDefault::~XFTimeoutManagerDefault()
             t = nullptr;
         }
     }
+    delete getInstance();
 }
 
 /**
@@ -175,6 +176,9 @@ void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFRea
     	if(*(*it) == timeoutToRemove){
             removedRelTick = (*it)->getRelTicks();
             it = _timeouts.erase(it);
+            if(it == _timeouts.end()){
+                break;
+            }
             removed = true;
     	}
     	if(removed){

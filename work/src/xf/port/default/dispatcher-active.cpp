@@ -48,6 +48,8 @@ XFDispatcherActiveDefault::XFDispatcherActiveDefault() :
 XFDispatcherActiveDefault::~XFDispatcherActiveDefault()
 {
     _bExecuting = false;
+    delete interface::XFResourceFactory::getInstance()->getDefaultDispatcher();
+    delete interface::XFResourceFactory::getInstance();
 }
 
 /**
@@ -79,7 +81,7 @@ void XFDispatcherActiveDefault::stop()
 {
     _bExecuting = false;
     _pThread->stop();
-    XF::kill();
+    //XF::kill();
 }
 
 /**
@@ -168,9 +170,12 @@ void XFDispatcherActiveDefault::dispatchEvent(const XFEvent * pEvent) const
     if(status == XFEventStatus::Consumed){
         /// delete the consumed Event
         delete pEvent;
+        pEvent = nullptr;
     }
     else if(status == XFEventStatus::Terminate){
-        interface::XFResourceFactory::getInstance()->getDefaultDispatcher()->stop();
+        delete pEvent->getBehavior();
+        delete pEvent;
+        pEvent = nullptr;
     }
 }
 

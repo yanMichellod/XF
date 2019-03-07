@@ -58,9 +58,7 @@ interface::XFDispatcher *XF::getDefaultDispatcher()
  */
 int XF::kill()
 {
-    delete interface::XFResourceFactory::getInstance()->getDefaultDispatcher();
-    delete interface::XFResourceFactory::getInstance();
-    delete interface::XFTimeoutManager::getInstance();
+
     _app->exit();
     return 0;
 }
