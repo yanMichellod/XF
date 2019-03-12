@@ -39,7 +39,6 @@ XFThreadPort::XFThreadPort(interface::XFThreadEntryPointProvider *pProvider, int
 void XFThreadPort::run()
 {
     /// call the method passed during the construction of thread
-    /// this way must be strange, but no way to make otherwise
      (_pEntryMethodProvider->*_entryMethod)(this);
 }
 
@@ -73,7 +72,35 @@ void XFThreadPort::stop()
  */
 void XFThreadPort::setPriority(XFThreadPriority priority)
 {
-    //setPriority(priority);
+    switch (priority) {
+    case XF_THREAD_PRIO_UNKNOWN :
+    {
+        QThread::setPriority(QThread::IdlePriority);
+        break;
+    }
+    case XF_THREAD_PRIO_LOW:
+    {
+        QThread::setPriority(QThread::LowPriority);
+        break;
+    }
+    case XF_THREAD_PRIO_NORMAL :
+    {
+        QThread::setPriority(QThread::NormalPriority);
+        break;
+    }
+    case XF_THREAD_PRIO_HIGH :
+    {
+        QThread::setPriority(QThread::HighPriority);
+        break;
+    }
+    case XF_THREAD_PRIO_MAX :
+    {
+        QThread::setPriority(QThread::HighestPriority);
+        break;
+    }
+    default:
+        break;
+    }
 }
 
 /**
@@ -82,6 +109,31 @@ void XFThreadPort::setPriority(XFThreadPriority priority)
  */
 XFThreadPriority XFThreadPort::getPriority() const
 {
+    switch(QThread::priority()){
+    case QThread::IdlePriority:{
+        return XF_THREAD_PRIO_UNKNOWN;
+        break;
+    }
+    case QThread::LowPriority:{
+        return XF_THREAD_PRIO_LOW;
+        break;
+    }
+    case QThread::NormalPriority:{
+        return XF_THREAD_PRIO_NORMAL;
+        break;
+    }
+    case QThread::HighPriority:{
+        return XF_THREAD_PRIO_HIGH;
+        break;
+    }
+    case QThread::HighestPriority:{
+        return XF_THREAD_PRIO_MAX;
+        break;
+    }
+    default:
+        break;
+    }
+
     return XF_THREAD_PRIO_UNKNOWN;
 }
 

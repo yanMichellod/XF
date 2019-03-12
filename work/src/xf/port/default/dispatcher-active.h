@@ -53,7 +53,6 @@ protected:
     bool _bExecuting;                   ///< True as long as the thread is executing the main loop.
     interface::XFThread * _pThread;     ///< Pointer to Thread executing the dispatcher.
     XFEventQueuePort _events;           ///< Queue holding events waiting to get dispatched.
-    interface::XFMutex * _pMutex;       ///< Mutex to protect event queue.
 };
 
 /** @} */ // end of port_default group

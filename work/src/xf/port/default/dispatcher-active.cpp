@@ -25,8 +25,7 @@ using interface::XFResourceFactory;
 XFDispatcherActiveDefault::XFDispatcherActiveDefault() :
     _bInitialized(false),
     _bExecuting(false),
-    _pThread(nullptr),
-    _pMutex(nullptr)
+    _pThread(nullptr)
 {
     // Create Thread
     _pThread = XFResourceFactory::getInstance()->createThread(this,
@@ -36,8 +35,6 @@ XFDispatcherActiveDefault::XFDispatcherActiveDefault() :
     if (!_bInitialized)
     {
         _bInitialized = true;
-        _pMutex = XFResourceFactory::getInstance()->createMutex();
-        assert(_pMutex);
     }
 }
 
@@ -66,11 +63,8 @@ void XFDispatcherActiveDefault::initialize()
 void XFDispatcherActiveDefault::start()
 {
     assert(_pThread);
-    assert(_pMutex);
     _bExecuting = true;
     _pThread->start();
-
-
 }
 
 /**
@@ -81,7 +75,6 @@ void XFDispatcherActiveDefault::stop()
 {
     _bExecuting = false;
     _pThread->stop();
-    //XF::kill();
 }
 
 /**
@@ -95,11 +88,8 @@ void XFDispatcherActiveDefault::pushEvent(XFEvent * pEvent)
         initialize();
     }
 
-    _pMutex->lock();
-    {
-        _events.push(pEvent);
-    }
-    _pMutex->unlock();
+    _events.push(pEvent);
+
 }
 
 /**
@@ -173,7 +163,7 @@ void XFDispatcherActiveDefault::dispatchEvent(const XFEvent * pEvent) const
         pEvent = nullptr;
     }
     else if(status == XFEventStatus::Terminate){
-        delete pEvent->getBehavior();
+        pEvent->getBehavior()->~XFReactive();
         delete pEvent;
         pEvent = nullptr;
     }
