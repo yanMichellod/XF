@@ -7,6 +7,7 @@
 #include "xf/interface/resourcefactory.h"
 #include "xf/interface/dispatcher.h"
 #include "xf/xf.h"
+#include "mdw/trace/trace.h"
 
 using interface::XFResourceFactory;
 using interface::XFTimeoutManager;

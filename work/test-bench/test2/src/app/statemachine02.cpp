@@ -7,7 +7,6 @@ StateMachine02::StateMachine02()
  : counter(0)
 {
 	_currentState = STATE_INITIAL;
-
 	Trace::out("Called constructor of class StateMachine02");
 }
 

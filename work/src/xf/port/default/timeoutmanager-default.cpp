@@ -105,12 +105,14 @@ void XFTimeoutManagerDefault::tick()
 {
     ///substract relative tick of the first element of the list if the list is not empty
     if(!_timeouts.empty()){
+        _pMutex->lock();
         _timeouts.front()->substractFromRelTicks(getTickInterval());
         /// the event is timeout
         while((!_timeouts.empty()) && (_timeouts.front()->getRelTicks() <= 0)){
             returnTimeout(_timeouts.front());
             _timeouts.pop_front();
          }
+        _pMutex->unlock();
     }
 }
 

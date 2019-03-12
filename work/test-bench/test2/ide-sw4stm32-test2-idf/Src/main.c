@@ -113,7 +113,6 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 /* USER CODE BEGIN 0 */
 #include "xf/xf.h"
 #include "app/testfactory02.h"
-
 /* USER CODE END 0 */
 
 /**

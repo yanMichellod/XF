@@ -143,7 +143,6 @@ int XFDispatcherActiveDefault::execute(const void * param /* = nullptr */)
  */
 int XFDispatcherActiveDefault::executeOnce()
 {
-    // TODO: Implement code
     dispatchEvent(_events.front());
     return _bExecuting;
 }
@@ -155,7 +154,6 @@ int XFDispatcherActiveDefault::executeOnce()
  */
 void XFDispatcherActiveDefault::dispatchEvent(const XFEvent * pEvent) const
 {
-    // TODO: Implement code
     XFEventStatus status = pEvent->getBehavior()->process(pEvent);
     if(status == XFEventStatus::Consumed){
         /// delete the consumed Event
