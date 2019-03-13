@@ -52,15 +52,6 @@ interface::XFDispatcher *XF::getDefaultDispatcher()
 {
     return XFResourceFactory::getInstance()->getDefaultDispatcher();
 }
-/**
- * @brief XF::kill method called to kill the main tread
- * @return
- */
-int XF::kill()
-{
 
-    _app->exit();
-    return 0;
-}
 
 #endif // USE_XF_PORT_IDF_QT_XF_IMPLEMENTATION

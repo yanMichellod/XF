@@ -15,7 +15,6 @@
 using interface::XFTimeoutManager;
 using interface::XFResourceFactory;
 
-// TODO: Implement code for XFDispatcherDefault class
 XFDispatcherDefault::XFDispatcherDefault():_events(){
 	_bExecuting = false;
 	_bInitialized = false;
@@ -52,10 +51,9 @@ void XFDispatcherDefault::unscheduleTimeout(int timeoutId, interface::XFReactive
 }
 
 int XFDispatcherDefault::executeOnce(){
-	if(!_events.empty()){
-		dispatchEvent(_events.front());
-		_events.pop();
-	}
+	_events.pend();
+	dispatchEvent(_events.front());
+	_events.pop();
 	return 1;
 }
 int XFDispatcherDefault::execute(const void * param){
@@ -63,13 +61,13 @@ int XFDispatcherDefault::execute(const void * param){
 }
 void XFDispatcherDefault::dispatchEvent(const XFEvent * pEvent) const{
 	XFEventStatus status = pEvent->getBehavior()->process(pEvent);
-	//trace_out("dispatch an event");
 	if(status == XFEventStatus::Consumed){
 		delete pEvent;
 		pEvent = nullptr;
 	}
 	else if(status == XFEventStatus::Terminate){
-		delete pEvent->getBehavior();
+		delete pEvent;
+		pEvent = nullptr;
 	}
 }
 

@@ -32,6 +32,7 @@ void XFEventQueueDefault::pop(){
 }
                                                         ///< Wait for the next event to arrive. Returns true if an event is in the queue.
 bool XFEventQueueDefault::pend(){
+	while(empty()){};
 	return true;
 }
 #endif // USE_XF_EVENT_QUEUE_DEFAULT_IMPLEMENTATION

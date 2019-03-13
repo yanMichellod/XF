@@ -43,8 +43,6 @@ interface::XFDispatcher* XF::getDefaultDispatcher() {
 	return interface::XFResourceFactory::getInstance()->getDefaultDispatcher();
 }
 
-int XF::kill() {
-	return 1;
-}
+
 
 #endif // USE_XF_DEFAULT_IMPLEMENTATION

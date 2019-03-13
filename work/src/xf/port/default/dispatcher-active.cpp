@@ -161,7 +161,6 @@ void XFDispatcherActiveDefault::dispatchEvent(const XFEvent * pEvent) const
         pEvent = nullptr;
     }
     else if(status == XFEventStatus::Terminate){
-        pEvent->getBehavior()->~XFReactive();
         delete pEvent;
         pEvent = nullptr;
     }

@@ -124,7 +124,6 @@ public:
 
     static interface::XFDispatcher * getDefaultDispatcher();	///< Returns pointer the default event dispatcher.
 
-    static int kill();
 
 protected:
     static bool _bInitialized;			///< Changes from false to true after calling method initialize(int). Used to handle multiple calls to init(int).
