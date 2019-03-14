@@ -5,32 +5,58 @@
 #include <assert.h>
 #include "eventqueue-default.h"
 
-// TODO: Implement code for XFEventQueueDefault class
+/**
+ * @brief XFEventQueueDefault::XFEventQueueDefault
+ */
 XFEventQueueDefault::XFEventQueueDefault(){
 
 }
 
+/**
+ * @brief XFEventQueueDefault::~XFEventQueueDefault
+ */
 XFEventQueueDefault::~XFEventQueueDefault(){
 
 }
+
+/**
+ * @brief XFEventQueueDefault::empty
+ * @return true if the queue is empty therefore false
+ */
 bool XFEventQueueDefault::empty() const{
 	///< Returns true if no event is in the queue.
 	return _queue.empty();
 }
+
+/**
+ * @brief XFEventQueueDefault::push push event onto the queue
+ * @param pEvent Event to store
+ * @return
+ */
 bool XFEventQueueDefault::push(const XFEvent * pEvent){
-   ///< Pushes the given event onto the queue.
 	_queue.push(pEvent);
 	return true;
 }
+
+/**
+ * @brief XFEventQueueDefault::front
+ * @return the first element in the queue
+ */
 const XFEvent * XFEventQueueDefault::front(){
-    ///< Returns pointer to next event to pop.
 	return _queue.front();
 }
+
+/**
+ * @brief XFEventQueueDefault::pop Pops the next event from the queue.
+ */
 void XFEventQueueDefault::pop(){
- 	///< Pops the next event from the queue.
 	_queue.pop();
 }
-                                                        ///< Wait for the next event to arrive. Returns true if an event is in the queue.
+
+/**
+ * @brief XFEventQueueDefault::pend Wait for the next event to arrive
+ * @return true if an event is in the queue.
+ */
 bool XFEventQueueDefault::pend(){
 	while(empty()){};
 	return true;

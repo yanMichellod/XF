@@ -6,35 +6,41 @@
 #include "mutex-default.h"
 
 /**
- *Constructor of XFMutexDefault
+ * @brief XFMutexDefault::XFMutexDefault
  */
 XFMutexDefault::XFMutexDefault(){
 
 }
 
 /**
- * Destructor of XFMutexDefault
+ * @brief XFMutexDefault::~XFMutexDefault
  */
 XFMutexDefault::~XFMutexDefault(){
 
 }
 
 /**
- * lock the mutex
+ * @brief XFMutexDefault::lock lock the mutex
  */
 void XFMutexDefault::lock(){
-	enterCritical();
+    /// disable interruption
+    enterCritical();
 }
 
 /**
- * unlock the mutex
+ * @brief XFMutexDefault::unlock unlock the mutex
  */
 void XFMutexDefault::unlock(){
-	exitCritical();
+    /// enable interruption
+    exitCritical();
 }
 
+/**
+ * @brief XFMutexDefault::tryLock Not implemented on STM32
+ * @param timeout
+ * @return
+ */
 bool XFMutexDefault::tryLock(int32_t timeout){
-
 	return true;
 }
 #endif // USE_XF_MUTEX_DEFAULT_IMPLEMENTATION
